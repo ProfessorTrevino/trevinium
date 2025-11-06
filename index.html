@@ -6,7 +6,7 @@
     <title>TREVINIUM 48 kHz Bronze Player - Professional Wireless Recorder for Android</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Crimson+Text:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Crimson+Text:wght@400;600;700&family=IBM+Plex+Serif:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=Source+Serif+Pro:wght@400;600&display=swap');
 
         * {
             scroll-behavior: smooth;
@@ -72,9 +72,229 @@
             background: linear-gradient(135deg, #e5c158 0%, #d4af37 50%, #c9a961 100%);
             box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
         }
+
+        .announcement {
+            position: fixed;
+            top: clamp(5rem, 10vw, 7rem);
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(720px, calc(100% - 2rem));
+            z-index: 200;
+            pointer-events: none;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .announcement__inner {
+            pointer-events: auto;
+            padding: 0 clamp(1.6rem, 4vw, 2.4rem) clamp(1.6rem, 4vw, 2.4rem);
+            border-radius: 12px;
+            background: #ffffff;
+            border: 2px solid rgba(28, 36, 56, 0.35);
+            box-shadow: 0 32px 70px rgba(8, 12, 30, 0.3);
+            max-height: 88vh;
+            overflow: auto;
+            scroll-behavior: auto;
+        }
+
+        .announcement__inner::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .announcement__inner::-webkit-scrollbar-thumb {
+            background: rgba(28, 36, 56, 0.35);
+            border-radius: 999px;
+        }
+
+        .announcement__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            border-bottom: 1px solid rgba(28, 36, 56, 0.12);
+            padding: clamp(1.6rem, 4vw, 2.4rem) 0 0.8rem;
+            position: sticky;
+            top: 0;
+            background: #ffffff;
+            z-index: 1;
+        }
+
+        .announcement__header-text {
+            display: grid;
+            gap: 0.2rem;
+        }
+
+        .announcement__headline {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #121624;
+        }
+
+        .announcement__subheadline {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            text-decoration: underline;
+            color: #4d5466;
+        }
+
+        .announcement__body {
+            padding: clamp(1.2rem, 3vw, 1.8rem) 0 0.8rem;
+            display: grid;
+            gap: 0.9rem;
+        }
+
+        .announcement__lead {
+            display: grid;
+            gap: 0.4rem;
+            margin-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(28, 36, 56, 0.12);
+            padding-bottom: 0.8rem;
+        }
+
+        .announcement__lead h2 {
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            margin: 0;
+            color: #121624;
+            font-family: 'IBM Plex Serif', 'Georgia', serif;
+        }
+
+        .announcement__tagline {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #4d5466;
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .announcement__body p,
+        .announcement__body ul {
+            font-family: 'Source Serif Pro', 'Georgia', serif;
+        }
+
+        .announcement__body p {
+            margin: 0;
+            color: #1f2332;
+            font-size: 0.96rem;
+            line-height: 1.6;
+        }
+
+        .announcement__body strong {
+            color: #121624;
+            font-weight: 600;
+        }
+
+        .announcement__body ul {
+            margin: 0;
+            padding-left: 1.2rem;
+            color: #1f2332;
+            display: grid;
+            gap: 0.25rem;
+        }
+
+        .announcement__list-columns {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.3rem 1.2rem;
+        }
+
+        .announcement__list-columns li {
+            position: relative;
+            padding-left: 1.2rem;
+        }
+
+        .announcement__list-columns li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #121624;
+        }
+
+        .announcement__signature {
+            font-style: italic;
+            color: #394057;
+        }
+
+        @media (max-width: 768px) {
+            .announcement {
+                top: clamp(4rem, 12vw, 6rem);
+            }
+
+            .announcement__inner {
+                padding: 1.4rem;
+            }
+        }
     </style>
 </head>
 <body>
+
+    <aside class="announcement" aria-labelledby="announcement-title">
+        <div class="announcement__inner">
+            <div class="announcement__header">
+                <div class="announcement__header-text">
+                    <span class="announcement__headline">Bluetooth Microphone Technology Breakthrough</span>
+                    <span class="announcement__subheadline">The Audio World Changes on Thanksgiving 2025</span>
+                </div>
+            </div>
+            <div class="announcement__body">
+                <header class="announcement__lead">
+                    <h2 id="announcement-title">Revolutionary App Captures Raw 48&nbsp;kHz Bluetooth Audio</h2>
+                    <p class="announcement__tagline">Official communication · Trevinium Audio Recorder launch briefing</p>
+                </header>
+                <p>Treviño Solutions Announces the Trevinium Audio Recorder — the World’s First App to Capture True Professional 48 kHz Raw Audio from Bluetooth Microphones</p>
+                <p>They said it was impossible.<br />Well… the impossible took us five months.</p>
+                <p>
+                    Where Apple spends billions on custom chips to improve audio on their latest and highest-end AirPods, we achieved the same results across all AirPods — and most Bluetooth microphones — with a few hundred dollars and a breakthrough method called Trevinium.
+                </p>
+                <p>
+                    For over 20 years, a myth has held back the entire world:<br />
+                    “You can’t get pro audio from Bluetooth.”
+                </p>
+                <p>Apple believed it. Samsung believed it. Sony believed it. Everyone believed it.<br />But we didn’t.</p>
+                <p>We took that myth and flipped it on its head.</p>
+                <p>
+                    Treviño Solutions introduces the Trevinium Audio Recorder, the first of a series of three apps — and the first and only app to capture true, raw, stunning 48 kHz audio directly from AirPods and other Bluetooth microphones.
+                </p>
+                <p>To understand what that means:</p>
+                <ul>
+                    <li>Most Bluetooth microphones record at 8–16 kHz (phone-call quality).</li>
+                    <li>A few reach 24 kHz, but only with heavy processing and artifacts.</li>
+                    <li>
+                        Some apps fake higher numbers using filters, upsampling, compression, and codecs to claim “studio quality.” These are misleading — they change the numbers after recording at ~16 kHz.
+                    </li>
+                    <li>No system on Earth has ever produced real, raw 48 kHz audio over Bluetooth.</li>
+                </ul>
+                <p><strong>Until now.</strong></p>
+                <p>And we did it with:</p>
+                <ul class="announcement__list-columns">
+                    <li>No new hardware</li>
+                    <li>No dongles</li>
+                    <li>No jailbreaking</li>
+                    <li>No codecs</li>
+                    <li>No tricks</li>
+                </ul>
+                <p>Just the earbuds you already own — we simply used Trevinium.</p>
+                <p>Why buy a $500 wireless lavalier mic?<br />The professional microphone you need is already in your pocket.<br />We simply used Trevinium.</p>
+                <p>Trevinium Bronze (48 kHz) is the first step.<br />Silver (96 kHz) and Gold (192 kHz) are coming next.</p>
+                <p>This changes everything for filmmakers, podcasters, musicians, teachers, creators, and anyone who depends on clean, high-quality wireless audio.</p>
+                <p>And we’re not stopping with one app.</p>
+                <p>
+                    Trevinium is being engineered to live inside every microphone on the planet — phones, earbuds, laptops, cars, gaming headsets, communication systems, and future devices that don’t even exist yet.
+                </p>
+                <p>This is the new standard for wireless sound.</p>
+                <p><strong>Official Release: Thanksgiving 2025</strong><br />The world of mobile audio shifts that day.</p>
+                <p class="announcement__signature">
+                    — John Treviño<br />
+                    Trevinium Creator
+                </p>
+            </div>
+        </div>
+    </aside>
 
     <!-- Sticky Header -->
     <header class="sticky top-0 z-50 ornate-border" style="background-color: rgba(10, 10, 10, 0.95); backdrop-filter: blur(10px);">
