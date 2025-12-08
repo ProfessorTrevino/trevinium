@@ -88,11 +88,14 @@
             <p class="font-bold text-sm hidden md:block vintage-text" style="color: #d4af37;">
                 ✦ HALF PRICE EARLY ACCESS ✦
             </p>
-            <a href="#download" class="btn-bronze px-6 py-3 rounded-sm whitespace-nowrap text-sm">
+            <a href="https://trevino07.gumroad.com/l/kavwc" data-gumroad-overlay="true" class="btn-bronze px-6 py-3 rounded-sm whitespace-nowrap text-sm">
                 Buy Early - $9.99
             </a>
         </div>
     </header>
+    <div class="text-center text-sm text-gray-400 mt-3">
+        Visitors today: <span id="visit-count" class="font-semibold text-yellow-400">...</span>
+    </div>
 
     <!-- FULL SCREEN HERO LANDING - JUST THE PHONE IMAGE -->
     <section class="hero-section flex flex-col items-center justify-start px-6 relative">
@@ -256,7 +259,7 @@
                             </div>
                         </div>
 
-                        <a href="#" class="block w-full bg-gradient-to-r from-yellow-500 to-yellow-700 text-black text-center px-8 py-5 rounded-xl font-bold text-xl hover:from-yellow-400 hover:to-yellow-600 transition-all mb-4">
+                        <a href="https://trevino07.gumroad.com/l/kavwc" data-gumroad-overlay="true" class="block w-full bg-gradient-to-r from-yellow-500 to-yellow-700 text-black text-center px-8 py-5 rounded-xl font-bold text-xl hover:from-yellow-400 hover:to-yellow-600 transition-all mb-4">
                             Buy Early - $9.99
                         </a>
                         <p class="text-center text-gray-300 text-xs mt-2">One-time purchase • Non-transferable license • No sharing</p>
@@ -327,5 +330,23 @@
         </div>
     </footer>
 
+    <script src="https://gumroad.com/js/gumroad.js"></script>
+    <script>
+        (function () {
+            const counterEl = document.getElementById("visit-count");
+            fetch("https://api.countapi.xyz/hit/trevinium.com/bronze")
+                .then((response) => response.json())
+                .then((data) => {
+                    if (counterEl && data && typeof data.value === "number") {
+                        counterEl.textContent = data.value.toLocaleString();
+                    }
+                })
+                .catch(() => {
+                    if (counterEl) {
+                        counterEl.textContent = "—";
+                    }
+                });
+        })();
+    </script>
 </body>
 </html>
