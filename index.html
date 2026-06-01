@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TREVINIUM 48 kHz Bronze Player - Professional Wireless Recorder for Android</title>
+    <meta name="description" content="TREVINIUM Bronze — true 48 kHz Bluetooth audio recording for Android. One-time purchase, license activation, offline recording.">
+    <meta property="og:title" content="TREVINIUM 48 kHz Bronze Player">
+    <meta property="og:description" content="Professional 48 kHz wireless audio recorder for Android. Buy once, activate with your Gumroad license key.">
+    <meta property="og:url" content="https://trevinium.com">
+    <meta property="og:image" content="https://trevinium.com/trevinium-images/phone-mockup.png">
+    <meta name="twitter:card" content="summary_large_image">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Crimson+Text:wght@400;600;700&family=IBM+Plex+Serif:wght@400;500;600&family=Space+Grotesk:wght@500;600&family=Source+Serif+Pro:wght@400;600&display=swap');
@@ -93,9 +99,6 @@
             </a>
         </div>
     </header>
-    <div class="text-center text-sm text-gray-400 mt-3">
-        Visitors today: <span id="visit-count" class="font-semibold text-yellow-400">...</span>
-    </div>
 
     <!-- FULL SCREEN HERO LANDING - JUST THE PHONE IMAGE -->
     <section class="hero-section flex flex-col items-center justify-start px-6 relative">
@@ -185,8 +188,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                         </svg>
                     </div>
-                    <h4 class="text-2xl font-bold mb-3">Offline Operation</h4>
-                    <p class="text-gray-400 text-lg">No sign-in or cloud needed. Your recordings stay private and secure on your device.</p>
+                    <h4 class="text-2xl font-bold mb-3">Private & Licensed</h4>
+                    <p class="text-gray-400 text-lg">One-time license key activation. Record offline after activation — your audio stays on your device.</p>
                 </div>
 
                 <!-- Feature 6 -->
@@ -247,11 +250,11 @@
                         <div class="grid grid-cols-3 gap-4 mb-8">
                             <div class="text-center p-4 bg-gray-800/50 rounded-lg">
                                 <div class="text-yellow-500 font-bold text-sm mb-1">Version</div>
-                                <div class="text-gray-300 text-sm">1.0 Bronze</div>
+                                <div class="text-gray-300 text-sm">1.4 Bronze</div>
                             </div>
                             <div class="text-center p-4 bg-gray-800/50 rounded-lg">
                                 <div class="text-yellow-500 font-bold text-sm mb-1">Size</div>
-                                <div class="text-gray-300 text-sm">~60 MB</div>
+                                <div class="text-gray-300 text-sm">~11 MB</div>
                             </div>
                             <div class="text-center p-4 bg-gray-800/50 rounded-lg">
                                 <div class="text-yellow-500 font-bold text-sm mb-1">Platform</div>
@@ -262,7 +265,13 @@
                         <a href="https://trevino07.gumroad.com/l/kavwc" data-gumroad-overlay="true" class="block w-full bg-gradient-to-r from-yellow-500 to-yellow-700 text-black text-center px-8 py-5 rounded-xl font-bold text-xl hover:from-yellow-400 hover:to-yellow-600 transition-all mb-4">
                             Buy Early - $9.99
                         </a>
-                        <p class="text-center text-gray-300 text-xs mt-2">One-time purchase • Non-transferable license • No sharing</p>
+                        <p class="text-center text-gray-300 text-xs mt-2">One-time purchase • Non-transferable license • Up to 2 devices</p>
+                        <ol class="mt-6 text-left text-gray-400 text-sm space-y-2 list-decimal list-inside">
+                            <li>Buy on Gumroad — you receive the Android APK and your license key by email.</li>
+                            <li>Install the APK (Android 10+). Allow installs from your file manager if prompted.</li>
+                            <li>Open the app and enter your Gumroad license key when asked.</li>
+                            <li>Start recording — re-check online about once a week; offline grace applies if you travel.</li>
+                        </ol>
                     </div>
                 </div>
             </div>
@@ -277,13 +286,25 @@
                     </div>
                     <div class="bg-gray-800 rounded-xl p-6 text-center">
                         <div class="text-yellow-500 font-bold text-lg mb-2">Storage</div>
-                        <div class="text-gray-300">~60 MB required</div>
+                        <div class="text-gray-300">~11 MB for the app</div>
                     </div>
                     <div class="bg-gray-800 rounded-xl p-6 text-center">
                         <div class="text-yellow-500 font-bold text-lg mb-2">Bluetooth</div>
                         <div class="text-gray-300">Bluetooth 5.0 device</div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activation FAQ -->
+    <section id="activation" class="py-20 bg-gray-900 border-t border-gray-800">
+        <div class="max-w-3xl mx-auto px-6">
+            <h3 class="text-3xl md:text-4xl font-bold text-center mb-8">License & Activation</h3>
+            <div class="space-y-6 text-gray-300 text-lg">
+                <p>Release builds require a valid Gumroad license key. Debug builds skip activation for development.</p>
+                <p><strong class="text-yellow-500">Need help?</strong> Email <a href="mailto:support@treviniumaudio.com" class="text-yellow-400 underline">support@treviniumaudio.com</a> with your order email and we will assist.</p>
+                <p class="text-sm text-gray-500">Activation is checked periodically while online. After activation you can record offline within the grace window shown in Settings → License & activation.</p>
             </div>
         </div>
     </section>
@@ -325,28 +346,11 @@
                 </div>
             </div>
             <div class="border-t border-gray-800 pt-8 text-center text-gray-500">
-                <p>&copy; 2025 Treviño Solutions / Treviño Inc. All rights reserved.</p>
+                <p>&copy; 2026 Treviño Solutions / Treviño Inc. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script src="https://gumroad.com/js/gumroad.js"></script>
-    <script>
-        (function () {
-            const counterEl = document.getElementById("visit-count");
-            fetch("https://api.countapi.xyz/hit/trevinium.com/bronze")
-                .then((response) => response.json())
-                .then((data) => {
-                    if (counterEl && data && typeof data.value === "number") {
-                        counterEl.textContent = data.value.toLocaleString();
-                    }
-                })
-                .catch(() => {
-                    if (counterEl) {
-                        counterEl.textContent = "—";
-                    }
-                });
-        })();
-    </script>
 </body>
 </html>
