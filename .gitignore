@@ -1,0 +1,6 @@
+activation-backend/.env
+activation-backend/.venv/
+activation-backend/keys/
+activation-backend/*.db
+activation-backend/__pycache__/
+
