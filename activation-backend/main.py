@@ -1,8 +1,13 @@
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
+import logging
+
 from fastapi import FastAPI
 
 from config import get_settings
+
+logger = logging.getLogger("trevinium.activation")
 from db import (
     count_active_installations,
     deactivate_installation,
@@ -24,15 +29,19 @@ from schemas import (
 from tokens import build_license_hint, issue_activation_token
 
 
-app = FastAPI(title="Trevinium Activation Backend", version="1.0.0")
 settings = None
 
 
-@app.on_event("startup")
-async def on_startup() -> None:
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     global settings
     settings = get_settings()
     init_db()
+    logger.info("Activation backend ready")
+    yield
+
+
+app = FastAPI(title="Trevinium Activation Backend", version="1.0.0", lifespan=lifespan)
 
 
 def _require_settings():
