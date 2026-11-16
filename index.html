@@ -56,10 +56,12 @@ a{color:inherit}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--gold-grad)}
 nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
-.brand img{width:36px;height:36px;border-radius:4px;box-shadow:0 0 0 1px rgba(199,154,59,.45)}
+.brand img{width:44px;height:44px;border-radius:4px;box-shadow:0 0 0 1px rgba(199,154,59,.45)}
 .mark{font-family:var(--f-display);font-weight:800;letter-spacing:.32em;font-size:15px}
 .pill{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--gold-lo);padding:9px 16px;border-radius:999px;color:var(--gold-hi);white-space:nowrap}
-.wordmark{display:block;width:100%;height:auto;margin-top:24px}
+.wm-row{display:flex;align-items:center;gap:clamp(12px,2.6vw,32px);margin-top:24px}
+.wm-logo{flex:none;width:14%;height:auto;border-radius:6px;box-shadow:0 0 0 1px rgba(199,154,59,.55),0 18px 40px rgba(0,0,0,.7),0 0 50px rgba(199,154,59,.18)}
+.wordmark{display:block;flex:1;min-width:0;width:100%;height:auto}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;margin-top:40px}
 .kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-hi);margin-bottom:18px}
 h1{font-size:clamp(32px,4.4vw,54px);font-weight:700;line-height:1.04}
@@ -148,7 +150,7 @@ footer .brand img{width:28px;height:28px}
   .band{padding-block:72px}
   .hero{padding-bottom:64px}
 }
-@media (max-width:420px){.brand .mark{display:none}}
+@media (max-width:600px){nav .brand{display:none}nav .pill{margin-left:auto}}
 </style>
 </head>
 <body>
@@ -160,6 +162,8 @@ footer .brand img{width:28px;height:28px}
       <span class="pill">Coming January 2027</span>
     </nav>
 
+    <div class="wm-row">
+    <img class="wm-logo" src="images/player/logo-320.webp" width="320" height="320" alt="TREVINIUM logo">
     <svg class="wordmark" viewBox="0 0 1000 190" role="img" aria-label="TREVINIUM">
       <defs>
         <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
@@ -169,6 +173,7 @@ footer .brand img{width:28px;height:28px}
       </defs>
       <text x="500" y="140" text-anchor="middle" fill="url(#g)" font-family="Bodoni Moda, Didot, serif" font-weight="800" font-size="150" letter-spacing="14" textLength="960" lengthAdjust="spacing">TREVINIUM</text>
     </svg>
+    </div>
 
     <div class="hero-grid">
       <div>
