@@ -49,6 +49,7 @@ a{color:inherit}
 .sec-head{display:flex;flex-direction:column;gap:16px;max-width:40em;margin-bottom:48px}
 .sec-head p{color:var(--ink-muted)}
 .dark .sec-head p{color:var(--on-black-muted)}
+.num{font-family:var(--f-body);font-weight:700;letter-spacing:0;font-variant-numeric:lining-nums}
 .rule{height:2px;width:72px;background:var(--gold-grad);border:0;margin:0}
 
 /* HERO */
@@ -199,7 +200,7 @@ footer .brand img{width:28px;height:28px}
   </div>
   <div class="b">
     <span class="label">TREVINIUM</span>
-    <p class="big">A take you can cut with: a 24&nbsp;kHz raw file plus an enhanced 48&nbsp;kHz file, every time.</p>
+    <p class="big">A take you can cut with: a <span class="num">24</span>&nbsp;kHz raw file plus an enhanced <span class="num">48</span>&nbsp;kHz file, every time.</p>
   </div>
 </div>
 
@@ -237,12 +238,12 @@ footer .brand img{width:28px;height:28px}
     </div>
     <div class="pair">
       <div class="panel">
-        <header><h3>Raw 24 kHz</h3><span class="label">Untouched</span></header>
+        <header><h3>Raw <span class="num">24</span> kHz</h3><span class="label">Untouched</span></header>
         <div class="spec"><canvas id="c1" aria-label="Illustration of the raw file"></canvas></div>
         <p class="note">Exactly what the AirPods delivered. Your safety copy.</p>
       </div>
       <div class="panel hot">
-        <header><h3 class="gold-text">Enhanced 48 kHz</h3><span class="label">Top end opened up</span></header>
+        <header><h3 class="gold-text">Enhanced <span class="num">48</span> kHz</h3><span class="label">Top end opened up</span></header>
         <div class="spec"><canvas id="c2" aria-label="Illustration of the enhanced file, with more detail at the top"></canvas></div>
         <p class="note">The top end opened up for air and detail.</p>
       </div>
@@ -298,7 +299,7 @@ footer .brand img{width:28px;height:28px}
 <section class="band light" id="faq">
   <div class="in">
     <div class="sec-head"><span class="label">Questions</span><h2>Straight answers.</h2></div>
-    <details open><summary>Is the 48 kHz file just upsampled?</summary><p>No. It is enhanced, not just upsampled like other apps that only put ordinary Bluetooth audio in a bigger 48&nbsp;kHz container. Your original sound is never touched: every take also saves your 24&nbsp;kHz raw file, untouched, so you can compare the two and use whichever you prefer.</p></details>
+    <details open><summary><span>Is the <span class="num">48</span> kHz file just upsampled?</span></summary><p>No. It is enhanced, not just upsampled like other apps that only put ordinary Bluetooth audio in a bigger 48&nbsp;kHz container. Your original sound is never touched: every take also saves your 24&nbsp;kHz raw file, untouched, so you can compare the two and use whichever you prefer.</p></details>
     <details><summary>Which AirPods does it work with?</summary><p>TREVINIUM is tested with AirPods 4. We will list other models here as they are tested.</p></details>
     <details><summary>Does it need internet?</summary><p>No. Everything records on your phone, and your recordings stay there.</p></details>
     <details><summary>Where do my files go?</summary><p>To Documents/TreviniumRecordings, or any folder you choose in Settings.</p></details>
