@@ -49,6 +49,7 @@ a{color:inherit}
 .sec-head{display:flex;flex-direction:column;gap:16px;max-width:40em;margin-bottom:48px}
 .sec-head p{color:var(--ink-muted)}
 .dark .sec-head p{color:var(--on-black-muted)}
+.dark .sec-head p.punch{color:var(--gold-hi);font-weight:600}
 .num{font-family:var(--f-body);font-weight:700;letter-spacing:0;font-variant-numeric:lining-nums}
 .rule{height:2px;width:72px;background:var(--gold-grad);border:0;margin:0}
 
@@ -180,7 +181,7 @@ footer .brand img{width:28px;height:28px}
       <div>
         <p class="kicker">Bluetooth Microphone Pack</p>
         <h1>The app that turns your AirPods into a <i class="gold-text">professional mic.</i></h1>
-        <p class="lead">No transmitter. No receiver. No cables. Press record, and every take saves twice: your 24&nbsp;kHz raw file, untouched, and an enhanced 48&nbsp;kHz file with the high end restored.</p>
+        <p class="lead">No transmitter. No receiver. No cables. Press record, and every take saves twice: your 24&nbsp;kHz original, untouched, and a full 48&nbsp;kHz file built out around it.</p>
         <div class="specs"><span class="chip">24 kHz RAW</span><span class="chip">48 kHz ENHANCED</span><span class="chip">TIMECODE</span></div>
         <div class="badges">
           <div class="store"><small>Coming to</small><strong>App Store</strong></div>
@@ -196,11 +197,11 @@ footer .brand img{width:28px;height:28px}
 <div class="strip">
   <div class="a">
     <span class="label">Everyone else</span>
-    <p class="big">Phone-call quality, because the Bluetooth mic is treated like a phone call.</p>
+    <p class="big"><span class="num">8</span> or <span class="num">16</span>&nbsp;kHz in a <span class="num">48</span>&nbsp;kHz box.</p>
   </div>
   <div class="b">
     <span class="label">TREVINIUM</span>
-    <p class="big">A take you can cut with: a <span class="num">24</span>&nbsp;kHz raw file plus an enhanced <span class="num">48</span>&nbsp;kHz file, every time.</p>
+    <p class="big"><span class="num">24</span>&nbsp;kHz from your AirPods, untouched, built out to a full, true <span class="num">48</span>&nbsp;kHz file.</p>
   </div>
 </div>
 
@@ -233,8 +234,10 @@ footer .brand img{width:28px;height:28px}
   <div class="in">
     <div class="sec-head">
       <span class="label">Raw vs enhanced</span>
-      <h2>Two files. <span class="gold-text">You decide which one you trust.</span></h2>
-      <p>Enhanced, not just upsampled. Other apps put ordinary Bluetooth audio in a bigger 48&nbsp;kHz container and call it 48&nbsp;kHz. TREVINIUM never touches your original: the 24&nbsp;kHz raw file keeps exactly what arrived, and the enhanced 48&nbsp;kHz file opens up the top end so voices sound open instead of muffled. Both save with every take, so you can always compare.</p>
+      <h2>Not a bigger box. <span class="gold-text">A better file.</span></h2>
+      <p>Most Bluetooth recorders get 8 or 16&nbsp;kHz from your earbuds, the same sound as a phone call. Then they save it in a 48&nbsp;kHz file and call it 48&nbsp;kHz.</p>
+      <p>TREVINIUM pulls 24&nbsp;kHz from your AirPods, the most they can send. Your recording stays exactly as it was captured: every word, every breath, untouched. We only reconstruct what Bluetooth left out, building a full 48&nbsp;kHz file around your original sound.</p>
+      <p class="punch">Not AI. Not upsampled. Your audio, at professional quality, ready to drop into any editing software.</p>
     </div>
     <div class="pair">
       <div class="panel">
@@ -243,9 +246,9 @@ footer .brand img{width:28px;height:28px}
         <p class="note">Exactly what the AirPods delivered. Your safety copy.</p>
       </div>
       <div class="panel hot">
-        <header><h3 class="gold-text">Enhanced <span class="num">48</span> kHz</h3><span class="label">Top end opened up</span></header>
+        <header><h3 class="gold-text">Enhanced <span class="num">48</span> kHz</h3><span class="label">Built out</span></header>
         <div class="spec"><canvas id="c2" aria-label="Illustration of the enhanced file, with more detail at the top"></canvas></div>
-        <p class="note">The top end opened up for air and detail.</p>
+        <p class="note">Your original sound, built out to a full 48&nbsp;kHz file.</p>
       </div>
     </div>
     <p class="caption">Illustration of the concept. Not a measurement of a specific recording.</p>
