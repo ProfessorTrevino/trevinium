@@ -1,430 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TREVINIUM — The Microphone Recorder App That Turns Your AirPods Into a Wireless Lav</title>
-    <meta name="description" content="TREVINIUM is a microphone recorder app that turns your AirPods into a wireless lav microphone. 48 kHz Enhanced and 24 kHz Raw on every take, running timecode, lock switch. Coming January 2027 to Google Play and the App Store.">
-    <meta property="og:title" content="TREVINIUM — Bluetooth Microphone Pack">
-    <meta property="og:description" content="Turn your AirPods into a wireless lav microphone. 48 kHz Enhanced · 24 kHz Raw. Coming January 2027.">
-    <meta property="og:url" content="https://trevinium.com">
-    <meta property="og:image" content="https://trevinium.com/images/player/og-trevinium.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="icon" href="trevinium-images/icon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Crimson+Text:wght@400;600;700&display=swap">
-    <link rel="stylesheet" href="assets/site.css">
-    <style>
-        :root {
-            --page: #e3e2de;          /* light brushed silver, like the player's metal */
-            --cream: #d8d6d0;         /* a shade deeper for alternating sections */
-            --card: #f1f0ec;          /* polished silver cards */
-            --ink: #24221e;
-            --muted: #4f4b44;
-            --line: #c4c0b6;
-            --gold: #8f6b1c;          /* readable solid gold for small text on silver */
-            --gold-deep: #7a5a15;
-            --brushed: repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 1px, rgba(0,0,0,0.025) 1px 2px, rgba(255,255,255,0) 2px 4px);
-            /* polished metallic gold for big lettering */
-            --gold-metal: linear-gradient(180deg, #f3dc8a 0%, #d4af37 30%, #a67c1f 55%, #e2c262 78%, #b8912f 100%);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TREVINIUM — Your AirPods Are Now a Lav Mic</title>
+<meta name="description" content="TREVINIUM is a microphone recorder app that turns your AirPods into a wireless lav mic. Every take saves a 24 kHz raw file and an enhanced 48 kHz file. Coming January 2027 to Google Play and the App Store.">
+<meta property="og:title" content="TREVINIUM — Your AirPods are now a lav mic">
+<meta property="og:description" content="No transmitter. No receiver. No cables. 24 kHz raw + 48 kHz enhanced on every take. Coming January 2027.">
+<meta property="og:url" content="https://trevinium.com">
+<meta property="og:image" content="https://trevinium.com/images/player/og-trevinium.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0B0B0C">
+<link rel="icon" href="images/player/logo-128.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;0,6..96,800;1,6..96,500&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --black:#0B0B0C; --black2:#151517;
+  --silver:#E7E5E0; --silver2:#DAD7D0; --card:#F5F4F0;
+  --ink:#121212; --ink-muted:#5E5A52; --paper-line:#CFCAC0;
+  --on-black:#F6F3EC; --on-black-muted:#A9A394; --black-line:#2A2A2D;
+  --gold:#C79A3B; --gold-hi:#F0DA9C; --gold-lo:#8A6420;
+  --gold-grad:linear-gradient(135deg,#8A6420 0%,#E9CE86 38%,#B98A2E 62%,#F3DFA6 100%);
+  --brushed:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 1px,rgba(0,0,0,.018) 1px 2px,rgba(255,255,255,0) 2px 4px);
+  --f-display:"Bodoni Moda","Didot","Times New Roman",serif;
+  --f-body:"Figtree","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--silver);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+p{margin:0}
+img{max-width:100%;height:auto;display:block}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em;line-height:1.05}
+h2{font-size:clamp(32px,4.8vw,58px);font-weight:700}
+h3{font-size:22px;font-weight:700;line-height:1.2}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.in{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band{padding-block:104px}
+.dark{background:var(--black);color:var(--on-black)}
+.light{background:var(--brushed),linear-gradient(180deg,#ECEAE5 0%,#E2E0DA 100%);color:var(--ink)}
+.label{font-family:var(--f-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted)}
+.dark .label{color:var(--on-black-muted)}
+.gold-text{background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.sec-head{display:flex;flex-direction:column;gap:16px;max-width:40em;margin-bottom:48px}
+.sec-head p{color:var(--ink-muted)}
+.dark .sec-head p{color:var(--on-black-muted)}
+.rule{height:2px;width:72px;background:var(--gold-grad);border:0;margin:0}
 
-        * { scroll-behavior: smooth; }
+/* HERO */
+.hero{background:radial-gradient(900px 520px at 78% 12%,rgba(199,154,59,.20),transparent 60%),var(--black);color:var(--on-black);padding-block:0 96px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--gold-grad)}
+nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand img{width:36px;height:36px;border-radius:4px;box-shadow:0 0 0 1px rgba(199,154,59,.45)}
+.mark{font-family:var(--f-display);font-weight:800;letter-spacing:.32em;font-size:15px}
+.pill{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--gold-lo);padding:9px 16px;border-radius:999px;color:var(--gold-hi);white-space:nowrap}
+.wordmark{display:block;width:100%;height:auto;margin-top:24px}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;margin-top:40px}
+.kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-hi);margin-bottom:18px}
+h1{font-size:clamp(34px,5vw,60px);font-weight:700;line-height:1.04}
+h1 i{font-style:italic;font-weight:500}
+.lead{font-size:clamp(18px,1.9vw,21px);color:var(--on-black-muted);max-width:33em;margin-top:22px}
+.specs{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.chip{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;border:1px solid var(--gold-lo);border-radius:999px;padding:6px 12px;color:var(--gold-hi);white-space:nowrap}
+.badges{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.store{display:flex;flex-direction:column;border:1px solid var(--gold-lo);background:rgba(199,154,59,.07);border-radius:12px;padding:12px 20px;flex:0 1 190px;min-width:0}
+.store small{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi)}
+.store strong{font-family:var(--f-display);font-size:21px}
+.fine{font-size:14px;color:var(--on-black-muted);margin-top:16px}
+.hero-phone{justify-self:center;width:100%;max-width:260px;filter:drop-shadow(0 0 1px rgba(199,154,59,.6)) drop-shadow(0 40px 60px rgba(0,0,0,.85)) drop-shadow(0 0 60px rgba(199,154,59,.16))}
 
-        body {
-            font-family: 'Crimson Text', serif;
-            background: var(--brushed), var(--page);
-            color: var(--ink);
-        }
+/* contrast strip */
+.strip{display:grid;grid-template-columns:1fr 1fr}
+.strip>div{padding:64px max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:14px;min-width:0}
+.strip .a{background:var(--brushed),var(--silver2);padding-left:max(16px,calc((100vw - 1120px)/2 + 16px))}
+.strip .b{background:var(--gold-grad);color:#0B0B0C;padding-right:max(16px,calc((100vw - 1120px)/2 + 16px))}
+.strip .label{color:inherit;opacity:.7}
+.strip p.big{font-family:var(--f-display);font-size:clamp(22px,2.7vw,34px);font-weight:700;line-height:1.14}
 
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Cinzel', serif;
-            letter-spacing: 0.08em;
-        }
+/* the recorder pictures */
+.phones{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;align-items:start}
+.phones figure{margin:0;display:flex;flex-direction:column;gap:18px;min-width:0}
+.phones img{width:100%;max-width:300px;aspect-ratio:640/1232;object-fit:contain;object-position:center bottom;margin:0 auto;filter:drop-shadow(0 28px 36px rgba(40,30,10,.32))}
+.phones figcaption{display:flex;flex-direction:column;gap:6px;max-width:300px;margin:0 auto;width:100%}
+.phones figcaption .label{color:var(--gold-lo)}
+.phones figcaption p{color:var(--ink-muted);font-size:16px}
 
-        .gold-text {
-            background: var(--gold-metal);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.7)) drop-shadow(0 1px 1px rgba(60, 42, 8, 0.55)) drop-shadow(0 3px 5px rgba(60, 42, 8, 0.25));
-        }
+/* proof */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.panel{background:var(--black2);border:1px solid var(--black-line);border-radius:18px;padding:22px;min-width:0}
+.panel.hot{border-color:var(--gold-lo)}
+.panel header{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.panel h3{font-size:20px}
+.spec canvas{width:100%;height:240px;display:block;border-radius:8px;background:#0B0B0C}
+.panel .note{font-size:14px;color:var(--on-black-muted);margin-top:14px}
+.caption{font-family:var(--f-mono);font-size:12px;color:var(--on-black-muted);margin-top:16px}
 
-        .gold { color: var(--gold); }
-        .muted { color: var(--muted); }
+/* features */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--card);border:1px solid var(--paper-line);border-top:3px solid var(--gold);border-radius:6px;padding:28px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card p{color:var(--ink-muted);font-size:16px}
+.card .label{color:var(--gold-lo)}
+.card.hot{background:var(--black);border-color:var(--black);border-top-color:var(--gold);color:var(--on-black)}
+.card.hot p{color:var(--on-black-muted)}
+.card.hot .label{color:var(--gold-hi)}
 
-        .gold-rule {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #c9a13c, transparent);
-        }
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.step{border-top:2px solid var(--ink);padding-top:18px;display:flex;flex-direction:column;gap:10px}
+.step p{color:var(--ink-muted)}
 
-        .site-header {
-            background: linear-gradient(180deg, rgba(244, 243, 240, 0.96) 0%, rgba(214, 212, 206, 0.96) 100%);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid;
-            border-image: linear-gradient(90deg, #e9d48e, #b8912f, #e9d48e) 1;
-        }
+/* the math */
+.price{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+.price .big{font-family:var(--f-display);font-weight:800;font-size:clamp(32px,4.6vw,60px);line-height:1.02;margin-top:14px}
+.price ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;font-family:var(--f-mono);font-size:14px}
+.price li{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--black-line);padding-bottom:10px}
+.price li span:last-child{color:var(--gold-hi);text-align:right}
 
-        .btn-gold {
-            background: linear-gradient(180deg, #f0d77e 0%, #d4af37 45%, #a67c1f 100%);
-            color: #231c0c;
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            border: 1px solid #a67c1f;
-            box-shadow: 0 4px 14px rgba(166, 124, 31, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-            transition: all 0.25s ease;
-        }
+/* faq */
+details{border-top:1px solid var(--paper-line);padding:22px 0}
+details:last-of-type{border-bottom:1px solid var(--paper-line)}
+summary{font-family:var(--f-display);font-weight:700;font-size:24px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--f-mono);color:var(--gold-lo)}
+details[open] summary::after{content:"\2212"}
+details p{color:var(--ink-muted);margin-top:12px;max-width:44em}
 
-        .btn-gold:hover {
-            box-shadow: 0 8px 24px rgba(166, 124, 31, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.7);
-            transform: translateY(-1px);
-        }
+.about{display:grid;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:start}
+.about p{color:var(--on-black-muted)}
+footer{border-top:1px solid var(--black-line);margin-top:72px;padding-block:30px 40px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--on-black-muted)}
+footer .brand img{width:28px;height:28px}
 
-        .hero {
-            background:
-                radial-gradient(ellipse at 50% 35%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 60%),
-                var(--brushed),
-                linear-gradient(180deg, #ecebe7 0%, #d9d7d1 100%);
-            min-height: 100vh;
-        }
-
-        .section-cream { background: var(--brushed), linear-gradient(180deg, #d6d4ce 0%, #cfcdc6 100%); }
-        .section-white { background: var(--brushed), linear-gradient(180deg, #e6e5e1 0%, #dddbd6 100%); }
-
-        .card {
-            background: linear-gradient(180deg, #f7f6f3 0%, #e9e8e3 100%);
-            border: 1px solid var(--line);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 3px 10px rgba(30, 28, 22, 0.10);
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: #c9a13c;
-            box-shadow: 0 16px 34px rgba(120, 90, 20, 0.14);
-        }
-
-        .icon-gold {
-            background: linear-gradient(180deg, #f0d77e 0%, #d4af37 45%, #a67c1f 100%);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 3px 10px rgba(166, 124, 31, 0.3);
-        }
-
-        .step-number {
-            font-family: 'Cinzel', serif;
-        }
-
-        .callout {
-            background: linear-gradient(180deg, #f6f5f1 0%, #e4e2dc 100%);
-            border: 1px solid #c9b27a;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 6px 20px rgba(30, 28, 22, 0.12);
-        }
-
-        .thumb { border: 2px solid var(--line); }
-        .thumb.active { border-color: #b8912f; }
-
-        details > summary { list-style: none; }
-        details > summary::-webkit-details-marker { display: none; }
-        details > summary::after { content: '+'; float: right; color: var(--gold); font-weight: 700; }
-        details[open] > summary::after { content: '–'; }
-    </style>
+@media (max-width:860px){
+  .hero-grid,.pair,.price,.about{grid-template-columns:1fr}
+  .grid,.steps{grid-template-columns:1fr}
+  .strip{grid-template-columns:1fr}
+  .strip>div{padding:40px max(16px,env(safe-area-inset-left,0px))}
+  .strip .a,.strip .b{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .hero-phone{max-width:250px}
+  .store{flex:1 1 140px}
+  .phones{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:20px;padding-bottom:12px;margin-inline:-16px;padding-inline:16px;-webkit-overflow-scrolling:touch}
+  .phones figure{flex:0 0 78%;scroll-snap-align:center}
+  .band{padding-block:72px}
+  .hero{padding-bottom:64px}
+}
+@media (max-width:420px){.brand .mark{display:none}}
+</style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="sticky top-0 z-50 site-header">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
-            <a href="#" class="flex items-center gap-3">
-                <img src="trevinium-images/icon.png" alt="TREVINIUM" class="h-10 w-10 rounded-sm">
-                <span class="hidden sm:inline text-xl font-bold gold-text" style="font-family: 'Cinzel', serif; letter-spacing: 0.1em;">TREVINIUM</span>
-            </a>
-            <p class="text-xs sm:text-sm font-bold gold whitespace-nowrap" style="font-family: 'Cinzel', serif; letter-spacing: 0.18em;">
-                ✦ COMING JANUARY 2027 ✦
-            </p>
+<header class="hero" id="top">
+  <div class="in">
+    <nav>
+      <a class="brand" href="#top"><img src="images/player/logo-128.png" alt="TREVINIUM logo"><span class="mark gold-text">TREVINIUM</span></a>
+      <span class="pill">Coming January 2027</span>
+    </nav>
+
+    <svg class="wordmark" viewBox="0 0 1000 190" role="img" aria-label="TREVINIUM">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#8A6420"/><stop offset=".38" stop-color="#E9CE86"/>
+          <stop offset=".62" stop-color="#B98A2E"/><stop offset="1" stop-color="#F3DFA6"/>
+        </linearGradient>
+      </defs>
+      <text x="500" y="140" text-anchor="middle" fill="url(#g)" font-family="Bodoni Moda, Didot, serif" font-weight="800" font-size="150" letter-spacing="14" textLength="960" lengthAdjust="spacing">TREVINIUM</text>
+    </svg>
+
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">Bluetooth Microphone Pack</p>
+        <h1>Your AirPods are now a <i class="gold-text">lav mic.</i></h1>
+        <p class="lead">No transmitter. No receiver. No cables. Press record, and every take saves twice: your 24&nbsp;kHz raw file, untouched, and an enhanced 48&nbsp;kHz file with the high end restored.</p>
+        <div class="specs"><span class="chip">24 kHz RAW</span><span class="chip">48 kHz ENHANCED</span><span class="chip">TIMECODE</span></div>
+        <div class="badges">
+          <div class="store"><small>Coming to</small><strong>App Store</strong></div>
+          <div class="store"><small>Coming to</small><strong>Google Play</strong></div>
         </div>
-    </header>
+        <p class="fine">Tested with AirPods 4. Records locally, no internet needed. TREVINIUM is not affiliated with Apple.</p>
+      </div>
+      <img class="hero-phone" src="images/player/phone-recording.webp" width="640" height="1232" alt="The TREVINIUM recorder on a phone: VU meter, running timecode, lock switch and lit record button">
+    </div>
+  </div>
+</header>
 
-    <!-- Hero: the player -->
-    <section class="hero flex flex-col items-center justify-start px-6 relative">
-        <div class="w-full text-center pt-10 pb-2">
-            <h1 class="text-5xl md:text-7xl font-extrabold mb-3 gold-text">TREVINIUM</h1>
-            <p class="text-xl md:text-2xl font-semibold muted mb-3">Bluetooth Microphone Pack</p>
-            <div class="gold-rule w-72 mx-auto mb-4"></div>
-            <p class="text-base md:text-lg font-bold gold mb-2" style="font-family: 'Cinzel', serif; letter-spacing: 0.2em;"><span class="whitespace-nowrap">48 kHz ENHANCED</span> · <span class="whitespace-nowrap">24 kHz RAW</span></p>
-            <p class="text-lg md:text-xl muted max-w-xl mx-auto">The microphone recorder app that turns your AirPods into a wireless lav microphone.</p>
-        </div>
+<div class="strip">
+  <div class="a">
+    <span class="label">Everyone else</span>
+    <p class="big">Phone-call quality, because the Bluetooth mic is treated like a phone call.</p>
+  </div>
+  <div class="b">
+    <span class="label">TREVINIUM</span>
+    <p class="big">A take you can cut with: a 24&nbsp;kHz raw file plus an enhanced 48&nbsp;kHz file, every time.</p>
+  </div>
+</div>
 
-        <div class="flex-1 flex items-start justify-center w-full pt-4 pb-24">
-            <img src="images/player/phone-recording.webp" alt="The TREVINIUM recorder on a phone: VU meter, LCD with running timecode, lock switch and lit record button" class="max-h-[76vh] w-auto object-contain">
-        </div>
-        <div class="absolute bottom-8 text-center">
-            <a href="#what" class="gold text-sm animate-bounce inline-block" style="font-family: 'Cinzel', serif; letter-spacing: 0.15em;">↓ Scroll to learn more ↓</a>
-        </div>
-    </section>
+<section class="band light" id="recorder">
+  <div class="in">
+    <div class="sec-head">
+      <span class="label">The recorder</span>
+      <h2>Built like the gear on set.</h2>
+      <hr class="rule">
+      <p>A metal recorder panel with a real VU meter, a timecode display, a lock switch and a big red record button.</p>
+    </div>
+    <div class="phones">
+      <figure>
+        <img src="images/player/phone-recording.webp" width="640" height="1232" loading="lazy" alt="Recording: the record button is lit and the timecode is running">
+        <figcaption><span class="label">Recording</span><p>The record button lights up, the timecode runs and the take length counts beside it.</p></figcaption>
+      </figure>
+      <figure>
+        <img src="images/player/phone-idle.webp" width="640" height="1232" loading="lazy" alt="Standing by: the display shows 24k raw plus 48k and which AirPod is the mic">
+        <figcaption><span class="label">Standing by</span><p>The display shows what will be saved and which AirPod is the mic.</p></figcaption>
+      </figure>
+      <figure>
+        <img src="images/player/phone-settings.webp" width="640" height="1110" loading="lazy" alt="Settings: lav mode, microphone select, save folder and files to record">
+        <figcaption><span class="label">Settings</span><p>Lav mode, microphone select, save folder and files to record, all in one place.</p></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
 
-    <!-- What it is -->
-    <section id="what" class="py-20 section-white">
-        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 gold-text">What It Is</h2>
-                <div class="space-y-5 text-xl leading-relaxed">
-                    <p>TREVINIUM is a microphone recorder app that turns your AirPods into a wireless lav microphone.</p>
-                    <p class="muted">Your phone does the recording. No transmitter, no receiver, no extra gear.</p>
-                    <p class="muted">It works like real studio gear: a VU meter, an LCD screen, a lock switch and a big red record button.</p>
-                    <p class="gold font-semibold">Built for filmmakers.</p>
-                </div>
-            </div>
-            <div class="flex justify-center">
-                <img src="images/player/phone-idle.webp" alt="The recorder ready to roll: LCD shows the file format, lav mode armed, standby" class="max-h-[620px] w-auto object-contain">
-            </div>
-        </div>
-    </section>
+<section class="band dark" id="proof">
+  <div class="in">
+    <div class="sec-head">
+      <span class="label">Raw vs enhanced</span>
+      <h2>Two files. <span class="gold-text">You decide which one you trust.</span></h2>
+      <p>Enhanced, not just upsampled. Other apps put ordinary Bluetooth audio in a bigger 48&nbsp;kHz container and call it 48&nbsp;kHz. TREVINIUM never touches your original: the 24&nbsp;kHz raw file keeps exactly what arrived, and the enhanced 48&nbsp;kHz file opens up the top end so voices sound open instead of muffled. Both save with every take, so you can always compare.</p>
+    </div>
+    <div class="pair">
+      <div class="panel">
+        <header><h3>Raw 24 kHz</h3><span class="label">Untouched</span></header>
+        <div class="spec"><canvas id="c1" aria-label="Illustration of the raw file"></canvas></div>
+        <p class="note">Exactly what the AirPods delivered. Your safety copy.</p>
+      </div>
+      <div class="panel hot">
+        <header><h3 class="gold-text">Enhanced 48 kHz</h3><span class="label">Top end opened up</span></header>
+        <div class="spec"><canvas id="c2" aria-label="Illustration of the enhanced file, with more detail at the top"></canvas></div>
+        <p class="note">The top end opened up for air and detail.</p>
+      </div>
+    </div>
+    <p class="caption">Illustration of the concept. Not a measurement of a specific recording.</p>
+  </div>
+</section>
 
-    <!-- Features -->
-    <section id="features" class="py-20 section-cream">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-14">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 gold-text">What It Does</h2>
-                <p class="muted text-xl max-w-2xl mx-auto">Everything you would want from a lav pack, on the phone you already carry</p>
-            </div>
+<section class="band light" id="features">
+  <div class="in">
+    <div class="sec-head">
+      <span class="label">What you get</span>
+      <h2>Built for the way you shoot.</h2>
+      <hr class="rule">
+    </div>
+    <div class="grid">
+      <div class="card hot"><span class="label">Raw + Enhanced</span><h3>Two files per take</h3><p>A 24&nbsp;kHz raw file, untouched, and an enhanced 48&nbsp;kHz file, saved together.</p></div>
+      <div class="card"><span class="label">Lav Mode</span><h3>A wireless lav you already own</h3><p>Turns your AirPod into a wireless lav mic. On Android, ear detection and noise control are switched off for each take.</p></div>
+      <div class="card"><span class="label">Timecode</span><h3>Time of day, stamped in</h3><p>Every take carries timecode with take length beside it, so multiple phones line up in the edit.</p></div>
+      <div class="card"><span class="label">Lock</span><h3>No accidental stops</h3><p>Flip the lock and the take keeps rolling, even with the screen off.</p></div>
+      <div class="card"><span class="label">Meter</span><h3>VU meter and LCD</h3><p>Set levels and check recording status at a glance.</p></div>
+      <div class="card"><span class="label">Offline</span><h3>Fully local</h3><p>Everything records on the phone. No account, no internet, no upload.</p></div>
+    </div>
+  </div>
+</section>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="card rounded-xl p-8">
-                    <div class="w-16 h-16 icon-gold rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 gold">Lav Mode</h3>
-                    <p class="muted text-lg">Keeps your AirPod recording as a lav microphone. On Android, ear detection and noise control are turned off automatically on every take.</p>
-                </div>
+<section class="band light" id="how" style="padding-top:0">
+  <div class="in">
+    <div class="sec-head"><span class="label">How it works</span><h2>Three steps. No gear.</h2></div>
+    <div class="steps">
+      <div class="step"><h3>Connect</h3><p>Pair your AirPods with your phone.</p></div>
+      <div class="step"><h3>Record</h3><p>Press record and flip the lock. The phone does all the recording.</p></div>
+      <div class="step"><h3>Edit</h3><p>Pull the raw and enhanced files into your editor. Timecode is already in each take.</p></div>
+    </div>
+  </div>
+</section>
 
-                <div class="card rounded-xl p-8">
-                    <div class="w-16 h-16 icon-gold rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 gold">48 kHz Enhanced</h3>
-                    <p class="muted text-lg">Enhanced, not just upsampled like other apps. Your original sound is never touched. TREVINIUM only adds the airy detail at the very top of the range, right on your phone.</p>
-                </div>
+<section class="band dark" id="math">
+  <div class="in price">
+    <div>
+      <span class="label">The math</span>
+      <p class="big">A wireless lav system costs hundreds. <span class="gold-text">You already own the mic.</span></p>
+    </div>
+    <ul>
+      <li><span>Transmitter</span><span>not needed</span></li>
+      <li><span>Receiver</span><span>not needed</span></li>
+      <li><span>Cables</span><span>not needed</span></li>
+      <li><span>Your AirPods</span><span>already in your pocket</span></li>
+    </ul>
+  </div>
+</section>
 
-                <div class="card rounded-xl p-8">
-                    <div class="w-16 h-16 icon-gold rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 gold">24 kHz Raw</h3>
-                    <p class="muted text-lg">A backup of your microphone exactly as recorded, saved with every take.</p>
-                </div>
+<section class="band light" id="faq">
+  <div class="in">
+    <div class="sec-head"><span class="label">Questions</span><h2>Straight answers.</h2></div>
+    <details open><summary>Is the 48 kHz file just upsampled?</summary><p>No. It is enhanced, not just upsampled like other apps that only put ordinary Bluetooth audio in a bigger 48&nbsp;kHz container. Your original sound is never touched: every take also saves your 24&nbsp;kHz raw file, untouched, so you can compare the two and use whichever you prefer.</p></details>
+    <details><summary>Which AirPods does it work with?</summary><p>TREVINIUM is tested with AirPods 4. We will list other models here as they are tested.</p></details>
+    <details><summary>Does it need internet?</summary><p>No. Everything records on your phone, and your recordings stay there.</p></details>
+    <details><summary>Where do my files go?</summary><p>To Documents/TreviniumRecordings, or any folder you choose in Settings.</p></details>
+    <details><summary>Can I sync several phones?</summary><p>Each take is stamped with time-of-day timecode, which lets you line up multiple phones in your editor.</p></details>
+    <details><summary>When can I get it?</summary><p>January 2027, on Google Play and the App Store. The iPhone version needs iOS 26.</p></details>
+  </div>
+</section>
 
-                <div class="card rounded-xl p-8">
-                    <div class="w-16 h-16 icon-gold rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 gold">Running Timecode</h3>
-                    <p class="muted text-lg">Time-of-day timecode, so several phones line up in editing. The take length runs right beside it.</p>
-                </div>
-
-                <div class="card rounded-xl p-8">
-                    <div class="w-16 h-16 icon-gold rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 gold">Lock Switch</h3>
-                    <p class="muted text-lg">Nothing stops a take by accident. It keeps recording with the screen off and the phone in a pocket.</p>
-                </div>
-
-                <div class="card rounded-xl p-8">
-                    <div class="w-16 h-16 icon-gold rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 gold">VU Meter + LCD</h3>
-                    <p class="muted text-lg">Set your levels like a pro and always see what is recording and where it is saved.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Enhanced, not just upsampled -->
-    <section class="py-20 section-white">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="callout rounded-2xl p-8 md:p-12 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 gold-text">Enhanced. Not Just Upsampled.</h2>
-                <p class="text-xl leading-relaxed mb-4">
-                    Many apps call themselves "48 kHz" when all they do is upsample: they stretch ordinary Bluetooth audio into a bigger 48 kHz file.
-                    The file gets bigger. The sound stays the same.
-                </p>
-                <p class="text-xl leading-relaxed mb-4">
-                    TREVINIUM never touches your original audio. It keeps every bit of your voice exactly as recorded,
-                    and only adds the airy, high detail at the very top of the range, the part you feel more than hear.
-                </p>
-                <p class="text-xl leading-relaxed muted">
-                    And the untouched 24 kHz raw recording is always saved beside it as your backup.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- How it works -->
-    <section id="how" class="py-20 section-cream">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-14">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 gold-text">How It Works</h2>
-                <p class="muted text-xl">Three steps, every take</p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="card rounded-xl p-8">
-                    <div class="step-number text-5xl font-bold mb-4 gold-text">1</div>
-                    <h3 class="text-2xl font-bold mb-3 gold">Your AirPod Listens</h3>
-                    <p class="muted text-lg">Your AirPod sends its microphone to the phone over Bluetooth.</p>
-                </div>
-                <div class="card rounded-xl p-8">
-                    <div class="step-number text-5xl font-bold mb-4 gold-text">2</div>
-                    <h3 class="text-2xl font-bold mb-3 gold">The Raw Is Saved</h3>
-                    <p class="muted text-lg">The app saves the 24 kHz raw recording, exactly as it came in.</p>
-                </div>
-                <div class="card rounded-xl p-8">
-                    <div class="step-number text-5xl font-bold mb-4 gold-text">3</div>
-                    <h3 class="text-2xl font-bold mb-3 gold">The 48 kHz Is Enhanced</h3>
-                    <p class="muted text-lg">The app adds the enhancement on the phone and saves the 48 kHz Enhanced file. Your original is never touched. No internet needed.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pictures + Coming January 2027 -->
-    <section id="get" class="py-20 section-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 gold-text">Get TREVINIUM</h2>
-                <p class="muted text-xl">Coming January 2027 to Google Play and the App Store</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-12 mb-12">
-                <!-- Pictures -->
-                <div>
-                    <div class="mb-4 rounded-xl overflow-hidden flex items-center justify-center" style="height: 540px; background: #16140f;">
-                        <img id="mainImage" src="images/player/screen-recording.webp" alt="Recording: running timecode, lav mode on, record button lit" class="max-h-full max-w-full object-contain">
-                    </div>
-                    <div class="grid grid-cols-3 gap-2">
-                        <img src="images/player/screen-recording.webp" alt="Recording" class="thumb active w-full h-28 object-cover object-top rounded cursor-pointer transition-all" onclick="showImage(this)">
-                        <img src="images/player/screen-idle.webp" alt="Ready to record" class="thumb w-full h-28 object-cover object-top rounded cursor-pointer transition-all" onclick="showImage(this)">
-                        <img src="images/player/screen-settings.webp" alt="Settings: lav mode, microphone select, files" class="thumb w-full h-28 object-cover object-top rounded cursor-pointer transition-all" onclick="showImage(this)">
-                    </div>
-                </div>
-
-                <!-- Coming soon -->
-                <div class="flex flex-col justify-center">
-                    <div class="callout rounded-2xl p-8 md:p-12">
-                        <div class="text-center mb-8">
-                            <div class="inline-block px-5 py-1 btn-gold rounded-full mb-5 text-sm">Coming January 2027</div>
-                            <div class="text-4xl md:text-5xl font-bold mb-3 gold-text" style="font-family: 'Cinzel', serif;">Google Play &amp; App Store</div>
-                        </div>
-
-                        <div class="grid grid-cols-3 gap-4">
-                            <div class="text-center p-4 card rounded-lg">
-                                <div class="gold font-bold text-sm mb-1">Android</div>
-                                <div class="muted text-sm">Google Play</div>
-                            </div>
-                            <div class="text-center p-4 card rounded-lg">
-                                <div class="gold font-bold text-sm mb-1">iPhone</div>
-                                <div class="muted text-sm">App Store</div>
-                            </div>
-                            <div class="text-center p-4 card rounded-lg">
-                                <div class="gold font-bold text-sm mb-1">Files</div>
-                                <div class="muted text-sm">WAV, on your phone</div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- What you'll need -->
-            <div class="mt-16">
-                <h3 class="text-2xl font-bold text-center mb-8 gold">What You'll Need</h3>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="card rounded-xl p-6 text-center">
-                        <div class="gold font-bold text-lg mb-2">AirPods</div>
-                        <div class="muted">Tested with AirPods 4</div>
-                    </div>
-                    <div class="card rounded-xl p-6 text-center">
-                        <div class="gold font-bold text-lg mb-2">A Phone</div>
-                        <div class="muted">Android, or iPhone with iOS 26</div>
-                    </div>
-                    <div class="card rounded-xl p-6 text-center">
-                        <div class="gold font-bold text-lg mb-2">Nothing Else</div>
-                        <div class="muted">No transmitter, receiver or cables</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Questions -->
-    <section id="faq" class="py-20 section-cream">
-        <div class="max-w-3xl mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 gold-text">Questions</h2>
-            <div class="space-y-4 text-lg">
-                <details class="card rounded-xl p-6" open>
-                    <summary class="cursor-pointer gold text-xl font-semibold">Is it 48 kHz?</summary>
-                    <p class="mt-3 muted">Yes. The Enhanced file is a full 48 kHz file, and it is enhanced, not just upsampled. Your original sound is left untouched; only the airy top end, the part you feel more than hear, is added on your phone. The 24 kHz raw file is always saved as your untouched original.</p>
-                </details>
-                <details class="card rounded-xl p-6">
-                    <summary class="cursor-pointer gold text-xl font-semibold">Does it need the internet?</summary>
-                    <p class="mt-3 muted">No. Everything happens on your phone, and your recordings stay there.</p>
-                </details>
-                <details class="card rounded-xl p-6">
-                    <summary class="cursor-pointer gold text-xl font-semibold">Where do my files go?</summary>
-                    <p class="mt-3 muted">To Documents/TreviniumRecordings, or any folder you choose in Settings.</p>
-                </details>
-                <details class="card rounded-xl p-6">
-                    <summary class="cursor-pointer gold text-xl font-semibold">What if my AirPods don't connect?</summary>
-                    <p class="mt-3 muted">The app records from the phone's own microphone instead, so you never lose the take.</p>
-                </details>
-                <details class="card rounded-xl p-6">
-                    <summary class="cursor-pointer gold text-xl font-semibold">Is there an iPhone version?</summary>
-                    <p class="mt-3 muted">Yes. It is coming to the App Store in January 2027 and needs iOS 26.</p>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <!-- About -->
-    <section class="py-20 section-white">
-        <div class="max-w-3xl mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold mb-8 gold-text">About TREVINIUM</h2>
-            <div class="space-y-6 text-xl leading-relaxed">
-                <p>Student and independent films often have bad sound, because lav microphones and wireless packs cost money most crews don't have.</p>
-                <p class="muted">But everyone already carries a phone, and most carry AirPods. TREVINIUM puts them to work.</p>
-                <p class="gold font-semibold">Made by Professor John Treviño, MFA · Rio Grande Valley, Texas</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 section-cream" style="border-top: 1px solid var(--line);">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="mb-8">
-                <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <img src="trevinium-images/icon.png" alt="" class="h-8 w-8 rounded-sm">
-                        <span class="font-bold text-lg gold-text" style="font-family: 'Cinzel', serif; letter-spacing: 0.1em;">TREVINIUM</span>
-                    </div>
-                    <p class="muted">The microphone recorder app that turns your AirPods into a wireless lav microphone.</p>
-                </div>
-            </div>
-            <div class="pt-8 text-center muted space-y-2" style="border-top: 1px solid var(--line);">
-                <p>&copy; 2026 Treviño Solutions / Treviño Inc. All rights reserved.</p>
-                <p class="text-xs">AirPods is a trademark of Apple Inc. TREVINIUM is not affiliated with Apple.</p>
-            </div>
-        </div>
+<section class="band dark" id="about" style="padding-bottom:0">
+  <div class="in">
+    <div class="about">
+      <div><span class="label">About</span><h2 style="margin-top:14px">Made by a <span class="gold-text">filmmaker.</span></h2></div>
+      <p>TREVINIUM comes from Professor John Treviño, MFA, a filmmaker and educator in South Texas, for student and independent filmmakers who need clean dialogue without a gear budget.</p>
+    </div>
+    <footer>
+      <a class="brand" href="#top"><img src="images/player/logo-128.png" alt=""><span>&copy; 2026 Treviño Solutions</span></a>
+      <span>TREVINIUM is not affiliated with Apple. AirPods is a trademark of Apple Inc.</span>
     </footer>
+  </div>
+</section>
 
-    <script>
-        function showImage(el) {
-            var main = document.getElementById('mainImage');
-            main.src = el.src;
-            main.alt = el.alt;
-            document.querySelectorAll('.thumb').forEach(function (t) { t.classList.toggle('active', t === el); });
-        }
-    </script>
+<script>
+(function(){
+  function rnd(seed){var x=Math.sin(seed*12.9898)*43758.5453;return x-Math.floor(x)}
+  function draw(id, enhanced){
+    var c=document.getElementById(id), dpr=window.devicePixelRatio||1;
+    var w=c.clientWidth, h=c.clientHeight; if(!w) return;
+    c.width=w*dpr; c.height=h*dpr;
+    var g=c.getContext('2d'); g.scale(dpr,dpr);
+    g.fillStyle='#0B0B0C'; g.fillRect(0,0,w,h);
+    var cols=Math.max(60,Math.floor(w/5)), rows=96, cw=w/cols, rh=h/rows;
+    for(var x=0;x<cols;x++){
+      var env=Math.max(0,Math.sin(x*.21)*.5+Math.sin(x*.067+1)*.5+.1);
+      env=Math.min(1,env*1.2);
+      for(var y=0;y<rows;y++){
+        var f=y/rows*24;
+        var harm=f<9?.55+.45*Math.cos(f*6.4+x*.05):.8;
+        var a=env*Math.exp(-f/6.5)*harm*(.75+.25*rnd(x*131+y));
+        var roll=1/(1+Math.exp((f-11.6)*2.2));
+        if(enhanced){
+          var ext=env*.34*Math.exp(-(f-11)/10)*(.6+.4*rnd(x*57+y*3));
+          a=a*roll+(f>10.5?ext*(1-roll):0);
+        } else { a=a*roll; }
+        if(a<.02) continue;
+        g.fillStyle=a>.55?'#F0DA9C':(a>.25?'#D8B25A':'#A97D2C');
+        g.globalAlpha=Math.min(1,a*1.7);
+        g.fillRect(x*cw,h-(y+1)*rh,cw+.5,rh+.5);
+      }
+    }
+    g.globalAlpha=1;
+  }
+  function all(){draw('c1',false);draw('c2',true)}
+  all();
+  window.addEventListener('resize',all);
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(all);
+})();
+</script>
 </body>
 </html>
