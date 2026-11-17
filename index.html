@@ -136,12 +136,13 @@ details p{color:var(--ink-muted);margin-top:12px;max-width:44em}
 
 .about{display:grid;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:start}
 /* more from Trevinium */
-.more{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.more{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .prod{display:flex;flex-direction:column;gap:10px;padding:28px;border:1px solid var(--black-line);border-top:3px solid var(--gold);border-radius:6px;background:var(--black2);text-decoration:none;color:var(--on-black);min-width:0;transition:border-color .2s,transform .2s}
 .prod:hover{border-color:var(--gold-lo);border-top-color:var(--gold);transform:translateY(-2px)}
 .prod .picon{width:72px;height:72px;border-radius:16px;display:grid;place-items:center;background:radial-gradient(circle at 50% 30%,#3a301a,#14110b 62%,#0a0805);box-shadow:inset 0 0 0 1px rgba(217,172,69,.25);overflow:hidden;margin-bottom:6px}
 .prod .picon svg{width:52px;height:48px}
 .prod .picon img{width:100%;height:100%;object-fit:cover}
+.prod .picon.jt{font-family:var(--f-display);font-weight:800;font-size:28px;letter-spacing:.04em;color:#E9CE86}
 .prod h3{font-size:28px}
 .prod p{color:var(--on-black-muted)}
 .prod .go{margin-top:auto;padding-top:8px;font-family:var(--f-mono);font-size:13px;letter-spacing:.08em;color:var(--gold-hi)}
@@ -322,21 +323,28 @@ footer .brand img{width:28px;height:28px}
 
 <section class="band dark" id="more" style="padding-bottom:0">
   <div class="in">
-    <div class="sec-head"><span class="label">More from Trevinium</span><h2>Also <span class="gold-text">coming soon.</span></h2></div>
+    <div class="sec-head"><span class="label">More from Trevinium</span><h2>More to <span class="gold-text">discover.</span></h2></div>
     <div class="more">
       <a class="prod" href="/ConsciousScreenplay/">
         <span class="picon"><svg viewBox="20 18 68 64" aria-hidden="true"><path d="M27,54C36,40.5 45,35 54,35C63,35 72,40.5 81,54C72,67.5 63,73 54,73C45,73 36,67.5 27,54Z" fill="none" stroke="#D9AC45" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path fill="#D9AC45" fill-rule="evenodd" d="M40.8,54a13.2,13.2 0 1,0 26.4,0a13.2,13.2 0 1,0 -26.4,0ZM51.5,47a2.5,2.5 0 1,0 5,0a2.5,2.5 0 1,0 -5,0ZM58.16,51.84a2.5,2.5 0 1,0 5,0a2.5,2.5 0 1,0 -5,0ZM55.61,59.66a2.5,2.5 0 1,0 5,0a2.5,2.5 0 1,0 -5,0ZM47.39,59.66a2.5,2.5 0 1,0 5,0a2.5,2.5 0 1,0 -5,0ZM44.84,51.84a2.5,2.5 0 1,0 5,0a2.5,2.5 0 1,0 -5,0ZM52.1,54a1.9,1.9 0 1,0 3.8,0a1.9,1.9 0 1,0 -3.8,0Z"/><path d="M54,24.5L54,29.5M41.5,27.6L43.4,32.2M66.5,27.6L64.6,32.2" stroke="#D9AC45" stroke-width="2.4" stroke-linecap="round"/></svg></span>
-        <span class="label">Windows · Mac · February 14, 2027</span>
+        <span class="label">Windows · Mac · Feb 14, 2027</span>
         <h3>Conscious Screenplay</h3>
         <p>Talk to the characters in your script.</p>
         <span class="go">See the page &rarr;</span>
       </a>
       <a class="prod" href="/CutMaster/">
         <span class="picon"><img src="/CutMaster/assets/icon.png" alt=""></span>
-        <span class="label">iPhone · Android · April 1, 2027</span>
+        <span class="label">iPhone · Android · Apr 1, 2027</span>
         <h3>The Cut Master</h3>
         <p>The scene is shot. The cut is yours.</p>
         <span class="go">See the page &rarr;</span>
+      </a>
+      <a class="prod" href="https://johntrevinomfa.com/">
+        <span class="picon jt">JT</span>
+        <span class="label">Filmmaker · Educator</span>
+        <h3>John Treviño, MFA</h3>
+        <p>The filmmaker behind Trevinium.</p>
+        <span class="go">johntrevinomfa.com &rarr;</span>
       </a>
     </div>
   </div>
