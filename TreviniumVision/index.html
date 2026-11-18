@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trevinium Vision · See the invisible</title>
+<meta name="description" content="Trevinium Vision turns your phone into twelve detectors in one app: ultrasound, Bluetooth trackers, Wi-Fi, magnetic fields, vibration, air pressure, infrared, light flicker and satellites, live over your camera. Coming soon to Android and iPhone.">
+<meta name="theme-color" content="#0B0B0C">
+<meta property="og:title" content="Trevinium Vision · See the invisible">
+<meta property="og:description" content="Twelve detectors. One app. Coming soon to Android and iPhone.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://trevinium.com/TreviniumVision/">
+<link rel="canonical" href="https://trevinium.com/TreviniumVision/">
+<link rel="icon" href="images/trevinium-mark.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0B0B0C;
+    --ink: #131215;
+    --ink-2: #1B1A1E;
+    --line: rgba(201, 162, 74, 0.22);
+    --gold: #C9A24A;
+    --gold-hi: #F1D58C;
+    --gold-lo: #8C6B27;
+    --gold-grad: linear-gradient(180deg, #F6DE9A 0%, #D6B05A 45%, #A47E32 100%);
+    --ivory: #F7F3EA;
+    --ivory-2: #EFE8D8;
+    --text-dark: #1B1813;
+    --muted-dark: #5E5648;
+    --text-light: #F3EEE3;
+    --muted-light: #A79F90;
+    --ultra: #B46CFF; --bt: #FF4FA3; --wifi: #3FE0FF; --mag: #FFB13B; --vibe: #7CFF6B;
+    --air: #9FB8FF; --ir: #FF3B3B; --light: #FFF06B; --sky: #6BFFC8;
+    --radius: 18px;
+    --maxw: 1160px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--black);
+    color: var(--text-light);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .serif { font-family: Cinzel, "Trajan Pro", Georgia, serif; }
+  .gold-text {
+    background: var(--gold-grad);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+  }
+  .eyebrow {
+    font-size: 13px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold); font-weight: 600;
+  }
+
+  /* ---------- header ---------- */
+  header.top {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(11, 11, 12, 0.82);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .brand img { width: 40px; height: 40px; border: 1px solid var(--line); }
+  .brand .name { font-family: Cinzel, Georgia, serif; font-weight: 700; font-size: 20px; letter-spacing: 0.14em; }
+  .brand .sub { font-size: 12px; letter-spacing: 0.42em; color: var(--text-light); margin-left: 2px; }
+  .pill-soon {
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600;
+    padding: 8px 14px; border-radius: 999px; border: 1px solid var(--gold); color: var(--gold-hi);
+    white-space: nowrap;
+  }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; overflow: hidden; padding: 72px 0 40px; }
+  .hero::before {
+    content: ""; position: absolute; inset: -20% -10% auto -10%; height: 900px;
+    background: radial-gradient(closest-side, rgba(201, 162, 74, 0.20), transparent 70%);
+    pointer-events: none;
+  }
+  .rings { position: absolute; left: 50%; top: 520px; width: 0; height: 0; pointer-events: none; }
+  .rings span {
+    position: absolute; left: 0; top: 0; border-radius: 50%;
+    border: 1px solid rgba(201, 162, 74, 0.35);
+    transform: translate(-50%, -50%); width: 200px; height: 200px;
+    animation: ring 6s linear infinite; opacity: 0;
+  }
+  .rings span:nth-child(2) { animation-delay: 1.5s; }
+  .rings span:nth-child(3) { animation-delay: 3s; }
+  .rings span:nth-child(4) { animation-delay: 4.5s; }
+  @keyframes ring {
+    0% { width: 200px; height: 200px; opacity: 0.0; }
+    10% { opacity: 0.9; }
+    100% { width: 1500px; height: 1500px; opacity: 0; }
+  }
+  .hero-copy { position: relative; text-align: center; max-width: 820px; margin: 0 auto; }
+  .hero h1 {
+    font-family: Cinzel, Georgia, serif; font-weight: 700;
+    font-size: clamp(44px, 7.4vw, 92px); line-height: 1.02; margin: 18px 0 18px;
+    letter-spacing: 0.02em;
+  }
+  .hero .lede { font-size: clamp(18px, 2.2vw, 22px); color: #D9D2C3; margin: 0 auto; max-width: 640px; }
+  .dots { display: flex; gap: 8px; justify-content: center; margin: 26px 0 30px; }
+  .dots i { width: 10px; height: 10px; border-radius: 50%; display: block; box-shadow: 0 0 12px currentColor; }
+  .stores { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+  .store {
+    display: flex; align-items: center; gap: 12px; text-align: left;
+    padding: 12px 22px 12px 18px; border-radius: 14px;
+    background: #000; border: 1px solid rgba(255, 255, 255, 0.22);
+    min-width: 230px;
+  }
+  .store svg { width: 28px; height: 28px; flex: none; }
+  .store small { display: block; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-hi); }
+  .store b { display: block; font-size: 19px; font-weight: 600; line-height: 1.2; }
+  .price-line { margin-top: 22px; color: var(--muted-light); font-size: 15px; letter-spacing: 0.02em; }
+  .price-line strong { color: var(--gold-hi); font-weight: 600; }
+
+  /* phones */
+  .phones {
+    position: relative; display: flex; justify-content: center; align-items: flex-end;
+    gap: 28px; margin-top: 64px;
+  }
+  .phone {
+    position: relative; border-radius: 44px; padding: 12px;
+    background: linear-gradient(160deg, #2A2830, #0D0D10 60%);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(201, 162, 74, 0.10);
+  }
+  .phone .screen { border-radius: 34px; overflow: hidden; background: #000; position: relative; }
+  .phone.side { width: 250px; opacity: 0.95; }
+  .phone.side .screen { aspect-ratio: 393 / 852; }
+  .phone.side .screen img { width: 100%; height: 100%; object-fit: cover; }
+  .phone.main { width: 320px; z-index: 2; }
+  .phone.main .screen { aspect-ratio: 300 / 640; }
+  .phone.main canvas { width: 100%; height: 100%; display: block; }
+  .phone .notch {
+    position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+    width: 90px; height: 22px; border-radius: 12px; background: #000; z-index: 3;
+  }
+  .phone-cap {
+    text-align: center; font-size: 13px; color: var(--muted-light); margin-top: 14px; letter-spacing: 0.04em;
+  }
+
+  /* stat strip */
+  .stats {
+    margin-top: 72px; display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .stat { padding: 30px 12px; text-align: center; }
+  .stat + .stat { border-left: 1px solid var(--line); }
+  .stat .n { font-family: Cinzel, Georgia, serif; font-size: 44px; font-weight: 700; line-height: 1; }
+  .stat .l { margin-top: 10px; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-light); }
+
+  /* ---------- ivory section: detectors ---------- */
+  section { padding: 110px 0; }
+  .ivory { background: var(--ivory); color: var(--text-dark); }
+  .ivory .eyebrow { color: var(--gold-lo); }
+  .sec-head { text-align: center; max-width: 760px; margin: 0 auto 56px; }
+  .sec-head h2 {
+    font-family: Cinzel, Georgia, serif; font-weight: 700;
+    font-size: clamp(34px, 4.6vw, 54px); line-height: 1.1; margin: 14px 0 16px;
+  }
+  .sec-head p { margin: 0; font-size: 18px; color: var(--muted-dark); }
+  .dark .sec-head p { color: var(--muted-light); }
+
+  .grid12 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .det {
+    background: #fff; border: 1px solid #E6DECB; border-radius: var(--radius);
+    padding: 24px 24px 22px; position: relative; overflow: hidden;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .det:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(60, 45, 15, 0.12); }
+  .det::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--c);
+  }
+  .det .tag {
+    display: inline-block; font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 700;
+    font-size: 12px; letter-spacing: 0.06em; color: #111;
+    background: var(--c); padding: 4px 12px; border-radius: 999px;
+  }
+  .det .num { position: absolute; right: 20px; top: 18px; font-family: Cinzel, Georgia, serif; font-size: 28px; color: #E3D9C2; font-weight: 700; }
+  .det h3 { margin: 16px 0 6px; font-size: 20px; font-weight: 700; letter-spacing: -0.01em; }
+  .det p { margin: 0; color: var(--muted-dark); font-size: 15.5px; line-height: 1.55; }
+
+  /* ---------- why one app ---------- */
+  .dark { background: var(--black); }
+  .ink { background: var(--ink); }
+  .why { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+  .why h2 { font-family: Cinzel, Georgia, serif; font-size: clamp(34px, 4.4vw, 52px); line-height: 1.1; margin: 14px 0 18px; }
+  .why p { color: #CFC7B7; margin: 0 0 16px; }
+  .stack { display: flex; flex-wrap: wrap; gap: 10px; }
+  .stack span {
+    font-size: 14px; padding: 9px 14px; border-radius: 10px;
+    background: var(--ink-2); border: 1px solid rgba(255, 255, 255, 0.08); color: #9E978A;
+    text-decoration: line-through; text-decoration-color: rgba(201, 162, 74, 0.7);
+  }
+  .one {
+    border-radius: 24px; padding: 36px; text-align: center;
+    background: radial-gradient(120% 120% at 50% 0%, rgba(201, 162, 74, 0.22), rgba(19, 18, 21, 1) 60%);
+    border: 1px solid var(--line);
+  }
+  .one img { width: 108px; height: 108px; margin: 0 auto 18px; border: 1px solid var(--line); }
+  .one .t { font-family: Cinzel, Georgia, serif; font-size: 28px; font-weight: 700; letter-spacing: 0.06em; }
+  .one .s { color: var(--muted-light); margin-top: 6px; }
+  .arrow { text-align: center; color: var(--gold); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; margin: 18px 0; }
+
+  /* ---------- how it works ---------- */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .step {
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 30px;
+    background: linear-gradient(180deg, rgba(201, 162, 74, 0.06), transparent 60%);
+  }
+  .step .k { font-family: Cinzel, Georgia, serif; font-size: 46px; font-weight: 700; line-height: 1; }
+  .step h3 { margin: 16px 0 8px; font-size: 21px; }
+  .step p { margin: 0; color: #C9C1B2; font-size: 16px; }
+
+  /* ---------- who ---------- */
+  .who { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .who .card {
+    background: #fff; border: 1px solid #E6DECB; border-radius: var(--radius); padding: 26px;
+  }
+  .who .ico {
+    width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center;
+    background: var(--black); margin-bottom: 16px;
+  }
+  .who .ico svg { width: 24px; height: 24px; }
+  .who h3 { margin: 0 0 8px; font-size: 18.5px; }
+  .who p { margin: 0; color: var(--muted-dark); font-size: 15.5px; }
+
+  /* ---------- privacy ---------- */
+  .privacy { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .privacy div { padding: 30px 26px; }
+  .privacy div + div { border-left: 1px solid var(--line); }
+  .privacy b { display: block; font-family: Cinzel, Georgia, serif; font-size: 22px; margin-bottom: 8px; }
+  .privacy span { color: #C9C1B2; font-size: 15.5px; }
+
+  /* ---------- final CTA ---------- */
+  .cta { text-align: center; position: relative; overflow: hidden; }
+  .cta::before {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 900px; height: 900px; transform: translate(-50%, -50%);
+    background: radial-gradient(closest-side, rgba(201, 162, 74, 0.18), transparent 70%); pointer-events: none;
+  }
+  .cta img.mark { width: 120px; height: 120px; margin: 0 auto 26px; border: 1px solid var(--line); position: relative; }
+  .cta h2 { position: relative; font-family: Cinzel, Georgia, serif; font-size: clamp(36px, 5.4vw, 64px); line-height: 1.08; margin: 10px 0 18px; }
+  .cta p { position: relative; color: #CFC7B7; max-width: 620px; margin: 0 auto 32px; }
+  .cta .stores { position: relative; }
+
+  footer { border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--muted-light); font-size: 13.5px; }
+  footer .row { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+  footer .fine { margin-top: 18px; font-size: 12px; color: #7D766A; line-height: 1.6; }
+  footer a { color: var(--gold-hi); text-decoration: none; }
+
+  /* reveal */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1000px) {
+    .grid12 { grid-template-columns: repeat(2, 1fr); }
+    .who { grid-template-columns: repeat(2, 1fr); }
+    .why { grid-template-columns: 1fr; }
+    .privacy { grid-template-columns: repeat(2, 1fr); }
+    .privacy div:nth-child(3) { border-left: 0; }
+    .privacy div:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .phone.side { width: 200px; }
+    .phone.main { width: 280px; }
+  }
+  @media (max-width: 720px) {
+    body { font-size: 16px; }
+    section { padding: 80px 0; }
+    .hero { padding-top: 48px; }
+    .phones { gap: 14px; }
+    .side-wrap { display: none; }
+    .phone.main { width: 290px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(3) { border-left: 0; }
+    .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .grid12, .steps, .who, .privacy { grid-template-columns: 1fr; }
+    .privacy div + div { border-left: 0; border-top: 1px solid var(--line); }
+    .brand .sub { display: none; }
+    .store { min-width: 0; width: 100%; max-width: 320px; }
+    .shots { display: grid !important; }
+  }
+  .shots { display: none; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
+  .shots .phone { width: auto; padding: 8px; border-radius: 30px; }
+  .shots .phone .screen { border-radius: 23px; aspect-ratio: 393 / 852; }
+  .shots .phone .screen img { width: 100%; height: 100%; object-fit: cover; }
+  @media (prefers-reduced-motion: reduce) {
+    .rings span { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body id="top">
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Trevinium Vision home">
+      <img src="images/trevinium-mark.webp" alt="Trevinium gold T mark">
+      <span class="name gold-text">TREVINIUM</span><span class="sub">VISION</span>
+    </a>
+    <span class="pill-soon">Coming soon</span>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="rings" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <div class="eyebrow">Trevinium Vision · Android &amp; iPhone</div>
+      <h1><span class="gold-text">See the invisible.</span></h1>
+      <p class="lede">Twelve detectors in one app. Point your phone at the world and watch the signals you can't see or hear: hidden trackers, ultrasonic tones, infrared camera lights, radio, magnetic fields and the satellites overhead, live over your camera.</p>
+      <div class="dots" aria-hidden="true">
+        <i style="color:var(--ultra);background:var(--ultra)"></i><i style="color:var(--bt);background:var(--bt)"></i>
+        <i style="color:var(--wifi);background:var(--wifi)"></i><i style="color:var(--mag);background:var(--mag)"></i>
+        <i style="color:var(--vibe);background:var(--vibe)"></i><i style="color:var(--air);background:var(--air)"></i>
+        <i style="color:var(--ir);background:var(--ir)"></i><i style="color:var(--light);background:var(--light)"></i>
+        <i style="color:var(--sky);background:var(--sky)"></i>
+      </div>
+      <div class="stores">
+        <div class="store">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3.5v17l14-8.5L5 3.5z" stroke="#F1D58C" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          <div><small>Coming soon</small><b>Google Play</b></div>
+        </div>
+        <div class="store">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="3" stroke="#F1D58C" stroke-width="1.6"/><path d="M10.5 18.5h3" stroke="#F1D58C" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <div><small>Coming soon</small><b>App Store</b></div>
+        </div>
+      </div>
+      <div class="price-line"><strong>$0.99</strong> · No ads · No account · Nothing leaves your phone</div>
+    </div>
+
+    <div class="phones">
+      <div class="reveal side-wrap">
+        <div class="phone side"><div class="screen"><img src="images/screen-intro.webp" alt="Trevinium Vision intro screen with the gold T plaque"></div></div>
+        <div class="phone-cap">The Trevinium intro</div>
+      </div>
+      <div class="reveal">
+        <div class="phone main"><div class="notch"></div><div class="screen"><canvas id="live" aria-label="Animated illustration of the Trevinium Vision live camera view"></canvas></div></div>
+        <div class="phone-cap">The live view (illustration)</div>
+      </div>
+      <div class="reveal side-wrap">
+        <div class="phone side"><div class="screen"><img src="images/screen-setup.webp" alt="Setup screen listing the nine signal layers with on and off switches"></div></div>
+        <div class="phone-cap">Choose what to sense</div>
+      </div>
+    </div>
+    <div class="shots">
+      <div><div class="phone"><div class="screen"><img src="images/screen-intro.webp" alt="Trevinium Vision intro screen"></div></div><div class="phone-cap">The Trevinium intro</div></div>
+      <div><div class="phone"><div class="screen"><img src="images/screen-setup.webp" alt="Layer setup screen"></div></div><div class="phone-cap">Choose what to sense</div></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="n gold-text">12</div><div class="l">Detectors</div></div>
+      <div class="stat"><div class="n gold-text">1</div><div class="l">App</div></div>
+      <div class="stat"><div class="n gold-text">0</div><div class="l">Internet access</div></div>
+      <div class="stat"><div class="n gold-text">$0.99</div><div class="l">One price</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12 DETECTORS ============ -->
+<section class="ivory" id="detectors">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Everything it does</div>
+      <h2>Twelve detectors. One&nbsp;app.</h2>
+      <p>Your phone is already packed with sensors. Trevinium Vision turns them into instruments and shows all of them at once.</p>
+    </div>
+    <div class="grid12">
+      <div class="det reveal" style="--c:var(--ultra)"><span class="num">01</span><span class="tag">ULTRA</span><h3>Ultrasound viewer</h3><p>See sound above human hearing, from 17 kHz up, as a live scrolling spectrum.</p></div>
+      <div class="det reveal" style="--c:var(--ultra)"><span class="num">02</span><span class="tag">ULTRA</span><h3>Beacon &amp; tone detector</h3><p>Alerts you to steady hidden tones from tracking beacons, pest repellers and motion sensors.</p></div>
+      <div class="det reveal" style="--c:var(--bt)"><span class="num">03</span><span class="tag">BT</span><h3>Bluetooth scanner</h3><p>Every broadcasting device around you on a live radar, with an estimated distance.</p></div>
+      <div class="det reveal" style="--c:var(--ir)"><span class="num">04</span><span class="tag">BT</span><h3>Tracker detector</h3><p>Spots AirTags, Tile, SmartTag and Google trackers, and warns you if one stays with you for 10 minutes.</p></div>
+      <div class="det reveal" style="--c:var(--wifi)"><span class="num">05</span><span class="tag">WIFI</span><h3>Wi-Fi analyzer</h3><p>Every network around you and how strong its signal is.</p></div>
+      <div class="det reveal" style="--c:var(--wifi)"><span class="num">06</span><span class="tag">WIFI</span><h3>Wi-Fi motion sensing</h3><p>Bodies absorb Wi-Fi. When people move nearby, the signal wobbles, and the app shows it.</p></div>
+      <div class="det reveal" style="--c:var(--mag)"><span class="num">07</span><span class="tag">MAG</span><h3>Magnetic field &amp; wire finder</h3><p>Find wiring in walls, hidden metal, magnets and running motors.</p></div>
+      <div class="det reveal" style="--c:var(--vibe)"><span class="num">08</span><span class="tag">VIBE</span><h3>Vibration meter</h3><p>Footsteps, appliances, machinery and the hum of a building.</p></div>
+      <div class="det reveal" style="--c:var(--air)"><span class="num">09</span><span class="tag">AIR</span><h3>Door &amp; window detector</h3><p>The barometer catches the tiny pressure pulse when a door or window opens anywhere inside.</p></div>
+      <div class="det reveal" style="--c:var(--ir)"><span class="num">10</span><span class="tag">IR</span><h3>Hidden camera finder</h3><p>Infrared night-vision lights are invisible to your eyes but show up on your phone's camera.</p></div>
+      <div class="det reveal" style="--c:var(--light)"><span class="num">11</span><span class="tag">LIGHT</span><h3>Flicker &amp; light meter</h3><p>Catches lights pulsing faster than your eye can see, and measures room brightness.</p></div>
+      <div class="det reveal" style="--c:var(--sky)"><span class="num">12</span><span class="tag">SKY</span><h3>Satellite sky view</h3><p>GPS, Galileo, GLONASS and BeiDou satellites drawn where they really are above you.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY ONE APP ============ -->
+<section class="dark">
+  <div class="wrap why">
+    <div class="reveal">
+      <div class="eyebrow">Why it's different</div>
+      <h2>Why download twelve&nbsp;apps?</h2>
+      <p>The app stores are full of single-purpose detectors: a Bluetooth scanner, a hidden-camera finder, an EMF meter, a Wi-Fi analyzer, a satellite viewer. Each one does one thing, in its own screen.</p>
+      <p>Trevinium Vision runs all of them together in one camera view. The edges of the screen glow in the color of whatever is most active right now, so you see the whole invisible picture at a glance.</p>
+    </div>
+    <div class="reveal">
+      <div class="stack">
+        <span>Ultrasound analyzer</span><span>Beacon detector</span><span>Bluetooth scanner</span><span>Tracker detector</span>
+        <span>Wi-Fi analyzer</span><span>Motion sensor</span><span>EMF meter</span><span>Vibration meter</span>
+        <span>Barometer</span><span>Hidden camera finder</span><span>Flicker meter</span><span>Satellite viewer</span>
+      </div>
+      <div class="arrow">All of it, in</div>
+      <div class="one">
+        <img src="images/trevinium-mark.webp" alt="">
+        <div class="t gold-text">TREVINIUM VISION</div>
+        <div class="s">One app · One live view · $0.99</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="ink">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">How it works</div>
+      <h2>Three steps to seeing more.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="k gold-text">1</div><h3>Choose what to sense</h3><p>Turn layers on or off with one tap. Turning off the layers you don't need saves battery.</p></div>
+      <div class="step reveal"><div class="k gold-text">2</div><h3>Point your phone</h3><p>The live camera fills the screen with every signal drawn on top: radar, ultrasound strip, readings and satellites.</p></div>
+      <div class="step reveal"><div class="k gold-text">3</div><h3>Watch for alerts</h3><p>Trackers, hidden tones, infrared lights, movement and pressure pulses pop up in their layer's color the moment they appear.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO ============ -->
+<section class="ivory">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Who it's for</div>
+      <h2>Made for the curious and the careful.</h2>
+    </div>
+    <div class="who">
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="10" r="3" stroke="#F1D58C" stroke-width="1.6"/><path d="M12 21s-7-6.2-7-11a7 7 0 1 1 14 0c0 4.8-7 11-7 11z" stroke="#F1D58C" stroke-width="1.6"/></svg></div>
+        <h3>Anyone worried about being tracked</h3><p>Find item trackers near you and get warned if one keeps following you.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="13" height="10" rx="2" stroke="#F1D58C" stroke-width="1.6"/><path d="M16 10.5l5-3v9l-5-3" stroke="#F1D58C" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+        <h3>Travelers &amp; rental guests</h3><p>Scan a hotel room or rental for the infrared glow of hidden cameras.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-5 9 5-9 5-9-5z" stroke="#F1D58C" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 11.5V16c0 1.5 2.2 3 5 3s5-1.5 5-3v-4.5" stroke="#F1D58C" stroke-width="1.6"/></svg></div>
+        <h3>Students &amp; teachers</h3><p>A science lab in your pocket: satellites, magnetic fields, ultrasound and radio you can actually see.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M4 11l8-7 8 7v9H4v-9z" stroke="#F1D58C" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 20v-5h4v5" stroke="#F1D58C" stroke-width="1.6"/></svg></div>
+        <h3>Homeowners &amp; renters</h3><p>Find wires in walls, check flickering lights and catch ultrasonic repellers and motion sensors.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRIVACY ============ -->
+<section class="dark">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Private by design</div>
+      <h2>It sees everything.<br><span class="gold-text">It shares nothing.</span></h2>
+    </div>
+    <div class="privacy reveal">
+      <div><b class="gold-text">No internet</b><span>The app has no internet permission, so it can't send anything anywhere.</span></div>
+      <div><b class="gold-text">No recording</b><span>Sound and video are analyzed live and never saved.</span></div>
+      <div><b class="gold-text">No ads</b><span>No ads, no trackers, no data collection.</span></div>
+      <div><b class="gold-text">No account</b><span>Open it and go. Nothing to sign up for.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta ink">
+  <div class="wrap">
+    <img class="mark reveal" src="images/trevinium-mark.webp" alt="Trevinium gold T mark">
+    <div class="eyebrow reveal">Coming soon</div>
+    <h2 class="reveal"><span class="gold-text">Coming soon to<br>Android and iPhone.</span></h2>
+    <p class="reveal">Twelve detectors, one app, one price. Trevinium Vision is on its way to Google Play and the App Store.</p>
+    <div class="stores reveal">
+      <div class="store">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3.5v17l14-8.5L5 3.5z" stroke="#F1D58C" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <div><small>Coming soon</small><b>Google Play</b></div>
+      </div>
+      <div class="store">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="3" stroke="#F1D58C" stroke-width="1.6"/><path d="M10.5 18.5h3" stroke="#F1D58C" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <div><small>Coming soon</small><b>App Store</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <a class="brand" href="#top"><img src="images/trevinium-mark.webp" alt="" style="width:32px;height:32px"><span class="name gold-text" style="font-size:16px">TREVINIUM</span></a>
+      <div>© 2026 Treviño Solutions · <a href="https://trevinium.com">trevinium.com</a></div>
+    </div>
+    <div class="fine">
+      Trevinium Vision is a detection aid, not a certified security tool. Results depend on each phone's sensors, and a quiet screen doesn't guarantee a space is free of cameras or trackers.
+      Google Play is a trademark of Google LLC. App Store and AirTag are trademarks of Apple Inc. Tile and SmartTag are trademarks of their respective owners.
+    </div>
+  </div>
+</footer>
+
+<!-- TREVINIUM family bar -->
+<style>
+.tv-family{position:relative;z-index:1;background:#0b0b0c;border-top:1px solid rgba(199,154,59,.35);padding:22px max(16px,env(safe-area-inset-left,0px)) calc(22px + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 28px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.tv-family .tv-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#E9CE86;font-family:Georgia,"Times New Roman",serif;font-weight:700;letter-spacing:.24em;font-size:15px}
+.tv-family .tv-brand img{width:40px;height:40px;border-radius:6px;box-shadow:0 0 0 1px rgba(199,154,59,.55)}
+.tv-family nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px}
+.tv-family nav a{color:#d8cdb4;text-decoration:none;font-size:14px}
+.tv-family nav a:hover,.tv-family nav a[aria-current]{color:#F0DA9C}
+</style>
+<div class="tv-family">
+  <a class="tv-brand" href="https://trevinium.com/"><img src="/images/brand/trevinium-mark.webp" alt="TREVINIUM logo"><span>TREVINIUM</span></a>
+  <nav aria-label="More from Trevinium">
+    <a href="https://trevinium.com/">TREVINIUM Recorder</a>
+    <a href="/ConsciousScreenplay/">Conscious Screenplay</a>
+    <a href="/CutMaster/">The Cut Master</a>
+    <a href="/TreviniumVision/" aria-current="page">Trevinium Vision</a>
+    <a href="https://johntrevinomfa.com/">John Treviño, MFA</a>
+  </nav>
+</div>
+
+
+<script>
+/* ---------- scroll reveal ---------- */
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: 0.12 });
+  els.forEach(function (e) { io.observe(e); });
+})();
+
+/* ---------- animated live-view illustration ---------- */
+(function () {
+  var cv = document.getElementById('live');
+  if (!cv) return;
+  var W = 300, H = 640;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  cv.width = W * dpr; cv.height = H * dpr;
+  var c = cv.getContext('2d');
+  c.scale(dpr, dpr);
+
+  var C = { ultra:'#B46CFF', bt:'#FF4FA3', wifi:'#3FE0FF', mag:'#FFB13B', vibe:'#7CFF6B', air:'#9FB8FF', ir:'#FF3B3B', light:'#FFF06B', sky:'#6BFFC8', gold:'#D9B45C' };
+  var chips = [['ULTRA',C.ultra],['BT',C.bt],['WIFI',C.wifi],['MAG',C.mag],['VIBE',C.vibe],['AIR',C.air],['IR',C.ir],['LIGHT',C.light],['SKY',C.sky]];
+  var mono = '"JetBrains Mono", ui-monospace, monospace';
+
+  // waterfall buffer
+  var WF_W = 128, WF_H = 64;
+  var wf = document.createElement('canvas'); wf.width = WF_W; wf.height = WF_H;
+  var wc = wf.getContext('2d');
+  wc.fillStyle = '#000'; wc.fillRect(0, 0, WF_W, WF_H);
+  var img = wc.createImageData(WF_W, 1);
+  function pal(v) { // black -> purple -> violet -> cyan -> white
+    var s = [[0,0,0],[42,10,74],[138,60,255],[63,224,255],[255,255,255]];
+    v = Math.max(0, Math.min(0.999, v)) * 4; var i = Math.floor(v), u = v - i;
+    var a = s[i], b = s[i + 1];
+    return [a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u, a[2] + (b[2] - a[2]) * u];
+  }
+  var toneCol = Math.round(WF_W * 0.38);
+
+  // traces
+  function Trace(n) { this.v = new Array(n).fill(0); }
+  Trace.prototype.push = function (x) { this.v.shift(); this.v.push(x); };
+  var tr = { mag: new Trace(80), vibe: new Trace(80), air: new Trace(80), light: new Trace(80) };
+
+  // radar items
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+  var bt = []; for (var i = 0; i < 14; i++) bt.push({ a: rnd(0, 6.28), d: rnd(0.25, 0.95) });
+  var wifi = []; for (i = 0; i < 9; i++) wifi.push({ a: rnd(0, 6.28), d: rnd(0.45, 0.98) });
+  var trk = { a: 2.2, d: 0.42 };
+  var sats = [['G12', C.vibe, 0.22, 0.30], ['E5', '#6BA8FF', 0.38, 0.405], ['C21', C.light, 0.52, 0.36], ['R7', '#FF6B6B', 0.84, 0.40], ['G25', C.vibe, 0.12, 0.43]];
+
+  function rr(x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+
+  var last = 0, frame = 0;
+  function draw(ts) {
+    var t = ts / 1000;
+    if (ts - last < 33) { requestAnimationFrame(draw); return; }
+    last = ts; frame++;
+
+    // scene: dim room
+    var g = c.createLinearGradient(0, 0, 0, H);
+    g.addColorStop(0, '#22212a'); g.addColorStop(0.55, '#141318'); g.addColorStop(1, '#0a0a0c');
+    c.fillStyle = g; c.fillRect(0, 0, W, H);
+    // window + furniture silhouettes
+    c.fillStyle = 'rgba(120,130,160,0.10)'; c.fillRect(40, 150, 90, 110);
+    c.strokeStyle = 'rgba(160,170,200,0.12)'; c.lineWidth = 2; c.strokeRect(40, 150, 90, 110);
+    c.beginPath(); c.moveTo(85, 150); c.lineTo(85, 260); c.moveTo(40, 205); c.lineTo(130, 205); c.stroke();
+    c.fillStyle = 'rgba(0,0,0,0.35)'; c.fillRect(150, 230, 120, 70); c.fillRect(160, 300, 8, 30); c.fillRect(252, 300, 8, 30);
+    // smoke detector (where the IR hotspot sits)
+    c.fillStyle = 'rgba(220,220,230,0.18)'; c.beginPath(); c.arc(214, 160, 12, 0, 6.28); c.fill();
+
+    // edge glow, cycling through layer colors
+    var glowCols = [C.bt, C.ultra, C.ir, C.wifi];
+    var gc = glowCols[Math.floor(t / 3) % glowCols.length];
+    var amp = 0.35 + 0.15 * Math.sin(t * 4);
+    var rg = c.createRadialGradient(W / 2, H / 2, H * 0.30, W / 2, H / 2, H * 0.72);
+    rg.addColorStop(0, 'rgba(0,0,0,0)'); rg.addColorStop(1, hexA(gc, amp));
+    c.fillStyle = rg; c.fillRect(0, 0, W, H);
+
+    // sky: horizon + satellites
+    c.setLineDash([4, 4]); c.strokeStyle = 'rgba(107,255,200,0.5)'; c.lineWidth = 1;
+    var hy = 290 + Math.sin(t * 0.5) * 4;
+    c.beginPath(); c.moveTo(0, hy + 6); c.quadraticCurveTo(W / 2, hy - 6, W, hy + 6); c.stroke(); c.setLineDash([]);
+    c.font = '700 9px ' + mono; c.fillStyle = C.sky;
+    c.fillText('W', 26, hy - 4); c.fillText('NW', 140, hy - 10); c.fillText('N', 266, hy - 4);
+    sats.forEach(function (s, k) {
+      var x = s[2] * W + Math.sin(t * 0.3 + k) * 3, y = s[3] * H + Math.cos(t * 0.25 + k) * 3;
+      c.strokeStyle = s[1]; c.lineWidth = 1.5; c.beginPath(); c.arc(x, y, 8, 0, 6.28); c.stroke();
+      c.fillStyle = s[1]; c.beginPath(); c.arc(x, y, 4.5, 0, 6.28); c.fill();
+      c.font = '500 9px ' + mono; c.fillText(s[0], x + 11, y + 3);
+    });
+
+    // IR hotspot
+    var hx = 214, hy2 = 160, r = 13 + 4 * Math.sin(t * 6);
+    c.fillStyle = 'rgba(255,220,255,0.95)'; c.beginPath(); c.arc(hx, hy2, 3, 0, 6.28); c.fill();
+    c.strokeStyle = C.ir; c.lineWidth = 1.5; c.beginPath(); c.arc(hx, hy2, r, 0, 6.28); c.stroke();
+    c.beginPath(); c.moveTo(hx - r - 5, hy2); c.lineTo(hx - r + 4, hy2); c.moveTo(hx + r - 4, hy2); c.lineTo(hx + r + 5, hy2);
+    c.moveTo(hx, hy2 - r - 5); c.lineTo(hx, hy2 - r + 4); c.moveTo(hx, hy2 + r - 4); c.lineTo(hx, hy2 + r + 5); c.stroke();
+    c.font = '700 10px ' + mono; c.fillStyle = C.ir; c.fillText('IR', hx + r + 7, hy2 - r);
+
+    // header
+    c.font = '700 13px Cinzel, Georgia, serif'; c.fillStyle = C.gold; c.fillText('TREVINIUM', 12, 52);
+    c.font = '500 9px Inter, sans-serif'; c.fillStyle = '#eee'; c.fillText('V I S I O N', 104, 52);
+    rr(220, 40, 70, 18, 9); c.fillStyle = 'rgba(0,0,0,0.5)'; c.fill(); c.strokeStyle = '#fff'; c.lineWidth = 1; c.stroke();
+    c.font = '500 8px ' + mono; c.fillStyle = '#fff'; c.fillText('FLIP CAM', 234, 52);
+    // chips
+    var cw = (W - 24 - 4 * 5) / 5, ch = 16;
+    chips.forEach(function (cp, k) {
+      var col = k % 5, row = Math.floor(k / 5);
+      var x = 12 + col * (cw + 5), y = 66 + row * (ch + 5);
+      rr(x, y, cw, ch, 8); c.fillStyle = hexA(cp[1], 0.85); c.fill();
+      c.font = '700 8px ' + mono; c.fillStyle = '#000';
+      var tw = c.measureText(cp[0]).width; c.fillText(cp[0], x + cw / 2 - tw / 2, y + 11);
+    });
+    // settings chip in the tenth slot
+    var sx = 12 + 4 * (cw + 5), sy = 66 + (ch + 5);
+    rr(sx, sy, cw, ch, 8); c.strokeStyle = C.gold; c.stroke(); c.font = '700 7px ' + mono; c.fillStyle = C.gold;
+    var stw = c.measureText('SETTINGS').width; c.fillText('SETTINGS', sx + cw / 2 - stw / 2, sy + 11);
+
+    // alerts
+    var alerts = [['TRACKER NEARBY: Find My ~2m', C.ir], ['ULTRASONIC TONE 19.40 kHz', C.ultra]];
+    if (Math.floor(t / 4) % 2) alerts.push(['MOVEMENT IN WI-FI FIELD', C.wifi]);
+    alerts.forEach(function (a, k) {
+      c.font = '700 9px ' + mono; var w = c.measureText(a[0]).width + 14, y = 112 + k * 21;
+      rr(12, y, w, 17, 4); c.fillStyle = 'rgba(0,0,0,0.65)'; c.fill(); c.strokeStyle = a[1]; c.lineWidth = 1.2; c.stroke();
+      c.fillStyle = a[1]; c.fillText(a[0], 19, y + 12);
+    });
+
+    // waterfall (bottom)
+    var wfx = 8, wfy = H - 92, wfw = W - 16, wfh = 82;
+    rr(wfx, wfy, wfw, wfh, 7); c.fillStyle = 'rgba(0,0,0,0.6)'; c.fill();
+    wc.drawImage(wf, 0, 1, WF_W, WF_H - 1, 0, 0, WF_W, WF_H - 1);
+    for (var x = 0; x < WF_W; x++) {
+      var v = Math.random() * 0.22 + 0.05;
+      if (Math.abs(x - toneCol) < 1) v = 0.85 + Math.random() * 0.1;
+      if (x > WF_W * 0.8) v *= 0.4; // mic roll-off
+      var sweep = ((frame * 0.7) % (WF_W * 3)) - WF_W;
+      if (Math.abs(x - sweep) < 1.5 && Math.random() < 0.8) v = Math.max(v, 0.6);
+      var p = pal(v); var o = x * 4;
+      img.data[o] = p[0]; img.data[o + 1] = p[1]; img.data[o + 2] = p[2]; img.data[o + 3] = 255;
+    }
+    wc.putImageData(img, 0, WF_H - 1);
+    c.imageSmoothingEnabled = true;
+    c.drawImage(wf, wfx + 5, wfy + 16, wfw - 10, wfh - 30);
+    c.font = '700 8px ' + mono; c.fillStyle = C.ultra; c.fillText('ULTRASOUND 17.0-23.5 kHz  peak 19.40k +31dB', wfx + 6, wfy + 11);
+    var lx = wfx + 5 + (wfw - 10) * (3 / 6.5);
+    c.setLineDash([3, 3]); c.strokeStyle = 'rgba(255,255,255,0.6)'; c.beginPath(); c.moveTo(lx, wfy + 16); c.lineTo(lx, wfy + wfh - 14); c.stroke(); c.setLineDash([]);
+    c.font = '500 7px ' + mono; c.fillStyle = '#aaa'; c.fillText('human limit', lx + 3, wfy + 25);
+    ['17k', '19k', '21k', '23k'].forEach(function (s, k) { c.fillText(s, wfx + 5 + (wfw - 10) * (k * 2 / 6.5) - 4, wfy + wfh - 4); });
+
+    // radar (bottom right)
+    var R = 52, cx = W - 12 - R, cy = wfy - 14 - R;
+    c.fillStyle = 'rgba(0,0,0,0.6)'; c.beginPath(); c.arc(cx, cy, R + 4, 0, 6.28); c.fill();
+    c.strokeStyle = 'rgba(255,255,255,0.3)'; c.lineWidth = 1;
+    [0.2, 0.4, 0.7, 1].forEach(function (f) { c.beginPath(); c.arc(cx, cy, R * f, 0, 6.28); c.stroke(); });
+    var sw = t * 2; c.strokeStyle = 'rgba(255,255,255,0.5)'; c.beginPath(); c.moveTo(cx, cy); c.lineTo(cx + Math.cos(sw) * R, cy + Math.sin(sw) * R); c.stroke();
+    var wob = Math.sin(t * 12) * 2.5; c.strokeStyle = hexA(C.wifi, 0.7); c.beginPath(); c.arc(cx, cy, R + wob, 0, 6.28); c.stroke();
+    c.fillStyle = C.wifi; wifi.forEach(function (d) { c.fillRect(cx + Math.cos(d.a) * R * d.d - 2, cy + Math.sin(d.a) * R * d.d - 2, 4, 4); });
+    c.fillStyle = C.bt; bt.forEach(function (d) { c.beginPath(); c.arc(cx + Math.cos(d.a) * R * d.d, cy + Math.sin(d.a) * R * d.d, 2.2, 0, 6.28); c.fill(); });
+    var tx = cx + Math.cos(trk.a) * R * trk.d, ty = cy + Math.sin(trk.a) * R * trk.d;
+    c.fillStyle = C.ir; c.beginPath(); c.arc(tx, ty, 3.5 + 1.5 * Math.sin(t * 8), 0, 6.28); c.fill();
+    c.font = '700 7px ' + mono; c.fillText('TRK', tx + 6, ty + 3);
+    c.fillStyle = '#fff'; c.beginPath(); c.arc(cx, cy, 2.5, 0, 6.28); c.fill();
+    c.font = '700 8px ' + mono; c.fillStyle = '#fff'; var lbl = 'BT 15  WIFI 9'; c.fillText(lbl, cx - c.measureText(lbl).width / 2, cy - R - 8);
+
+    // gauges (bottom left)
+    var gx = 8, gy = cy - R - 4, gw = cx - R - 16 - gx, gh = (R + 4) * 2;
+    rr(gx, gy, gw, gh, 7); c.fillStyle = 'rgba(0,0,0,0.6)'; c.fill();
+    tr.mag.push(Math.sin(t * 0.9) * 2 + (Math.random() - 0.5) * 0.8);
+    tr.vibe.push(Math.abs((Math.random() - 0.5) * 0.4) + (Math.random() < 0.04 ? 0.8 : 0));
+    tr.air.push((Math.random() - 0.5) * 0.6 + (frame % 150 < 6 ? 4 : 0));
+    tr.light.push(0.35 + Math.sin(t * 1.3) * 0.08 + Math.random() * 0.05);
+    var rows = [['MAG', C.mag, tr.mag, '48.2uT d+1.9', true], ['VIBE', C.vibe, tr.vibe, '0.021 m/s2', false], ['AIR', C.air, tr.air, 'd+0.4 Pa', true], ['LIGHT', C.light, tr.light, 'flk 0.38', false]];
+    var rh = gh / 4;
+    rows.forEach(function (rw, k) {
+      var y0 = gy + k * rh;
+      c.font = '700 8px ' + mono; c.fillStyle = rw[1]; c.fillText(rw[0], gx + 5, y0 + 11);
+      c.font = '500 7.5px ' + mono; c.fillStyle = '#eee'; c.fillText(rw[3], gx + 34, y0 + 11);
+      var v = rw[2].v, lo = Math.min.apply(null, v), hi = Math.max.apply(null, v);
+      if (rw[4]) { var m = Math.max(Math.abs(lo), Math.abs(hi), 1); lo = -m; hi = m; } else { lo = 0; hi = Math.max(hi, 0.3); }
+      c.strokeStyle = rw[1]; c.lineWidth = 1.2; c.beginPath();
+      for (var j = 0; j < v.length; j++) {
+        var px = gx + 5 + j * (gw - 10) / (v.length - 1), py = y0 + rh - 3 - (v[j] - lo) / (hi - lo) * (rh - 17);
+        if (j) c.lineTo(px, py); else c.moveTo(px, py);
+      }
+      c.stroke();
+    });
+
+    requestAnimationFrame(draw);
+  }
+  function hexA(h, a) {
+    var n = parseInt(h.slice(1), 16);
+    return 'rgba(' + (n >> 16 & 255) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',' + a + ')';
+  }
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
