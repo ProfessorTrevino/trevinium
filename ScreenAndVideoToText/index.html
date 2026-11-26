@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Screen and Video to Text · by TREVINIUM</title>
+<meta name="description" content="Two floating buttons over any app. One turns the sound of the video you're watching into text. The other copies every word on your screen, even text you can't select. One-time purchase. 100% offline. Coming soon to Android.">
+<meta name="theme-color" content="#0A0A0B">
+<meta property="og:title" content="Screen and Video to Text · by TREVINIUM">
+<meta property="og:description" content="If you can see it or hear it, you can copy it. Two floating buttons. One-time purchase. 100% offline. Coming soon to Android.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://trevinium.com/ScreenAndVideoToText/">
+<meta property="og:image" content="https://trevinium.com/ScreenAndVideoToText/images/og-screen-video-to-text.jpg">
+<link rel="canonical" href="https://trevinium.com/ScreenAndVideoToText/">
+<link rel="icon" href="images/app-icon.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0B; --panel: #121114; --panel-2: #19181C;
+    --line: rgba(212, 170, 84, 0.24);
+    --gold: #D4AA54; --gold-hi: #F2D78E; --gold-lo: #9A7430;
+    --gold-grad: linear-gradient(180deg, #F6DE9A 0%, #D9B25C 50%, #A9823A 100%);
+    --text: #F4EFE4; --muted: #A69E8F; --dim: #6F685C;
+    --rec: #FF3B3B;
+    --maxw: 1180px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; color: var(--text); background: var(--bg);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: clip;
+  }
+  /* the diagonal gold lines from the videos */
+  body::before {
+    content: ""; position: fixed; inset: -50%; z-index: -1; pointer-events: none;
+    background:
+      repeating-linear-gradient(74deg, transparent 0 86px, rgba(212,170,84,0.10) 86px 87px, transparent 87px 173px, rgba(212,170,84,0.05) 173px 174px),
+      radial-gradient(60% 40% at 70% 10%, rgba(212,170,84,0.10), transparent 70%);
+  }
+  img, video { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .gold { color: var(--gold); }
+  .gold-text { background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .kicker { display: inline-block; font-size: 12.5px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); padding-bottom: 8px; border-bottom: 1px solid var(--gold); }
+  .big { font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.98; margin: 0; }
+  .big .g { color: var(--gold); }
+
+  /* header */
+  header.top { position: sticky; top: 0; z-index: 50; background: rgba(10,10,11,0.84); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 66px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
+  .brand img { width: 38px; height: 38px; border-radius: 9px; border: 1px solid var(--line); flex: none; }
+  .brand .name { font-family: Cinzel, Georgia, serif; font-weight: 700; font-size: 19px; letter-spacing: 0.14em; white-space: nowrap; }
+  .brand .sub { font-size: 11.5px; font-weight: 600; letter-spacing: 0.24em; color: var(--muted); white-space: nowrap; }
+  .pill-soon { flex: none; margin-left: auto; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; padding: 8px 14px; border-radius: 999px; background: var(--gold-grad); color: #1A140A; white-space: nowrap; }
+
+  /* hero */
+  .hero { padding: 70px 0 30px; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 60px; align-items: center; }
+  .hero h1 { font-size: clamp(44px, 5.6vw, 74px); margin: 22px 0 26px; }
+  .hero h1 span { display: block; }
+  .hero .lede { font-size: clamp(18px, 2vw, 21px); color: #D8D1C2; margin: 0 0 30px; max-width: 590px; }
+  .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  .badges span { font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 9px 14px; border-radius: 8px; border: 1px solid var(--line); background: rgba(18,17,20,0.8); }
+  .badges span b { color: var(--gold-hi); }
+  .play-btn { display: inline-flex; align-items: center; gap: 14px; text-decoration: none; padding: 14px 24px 14px 16px; border-radius: 14px; background: #000; border: 1px solid rgba(255,255,255,0.22); }
+  .play-btn svg { width: 28px; height: 28px; flex: none; }
+  .play-btn small { display: block; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-hi); font-weight: 600; }
+  .play-btn b { display: block; font-size: 19px; line-height: 1.2; }
+  .req { margin-top: 12px; font-size: 14px; color: var(--muted); }
+
+  .phone { position: relative; border-radius: 42px; padding: 10px; background: linear-gradient(160deg, #34312A, #0D0D10 55%); box-shadow: 0 0 0 1px rgba(212,170,84,0.35), 0 40px 90px rgba(0,0,0,0.7), 0 0 80px rgba(212,170,84,0.12); }
+  .phone .screen { border-radius: 33px; overflow: hidden; background: #000; position: relative; aspect-ratio: 9 / 16; }
+  .phone .screen video { width: 100%; height: 100%; object-fit: cover; }
+  .hero .phone { width: min(330px, 100%); margin: 0 auto; transform: rotate(2.5deg); }
+  .sound { position: absolute; right: 18px; bottom: 18px; z-index: 3; display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; border: 1px solid var(--gold); background: rgba(0,0,0,0.7); color: var(--gold-hi); font: 600 13px Inter, sans-serif; cursor: pointer; }
+  .sound svg { width: 16px; height: 16px; }
+  .cap { text-align: center; font-size: 13px; color: var(--muted); margin-top: 16px; letter-spacing: 0.04em; }
+
+  section { padding: 100px 0; position: relative; }
+  .head { max-width: 800px; margin-bottom: 50px; }
+  .head.c { margin-left: auto; margin-right: auto; text-align: center; }
+  .head h2 { font-size: clamp(38px, 5.4vw, 66px); margin: 20px 0 16px; }
+  .head p { margin: 0; font-size: 18.5px; color: var(--muted); }
+
+  /* ticker band */
+  .band { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(212,170,84,0.06); overflow: hidden; padding: 18px 0; }
+  .band .track { display: flex; gap: 46px; width: max-content; animation: slide 36s linear infinite; }
+  .band span { font-weight: 900; text-transform: uppercase; font-size: 22px; letter-spacing: 0.04em; white-space: nowrap; }
+  .band i { font-style: normal; color: var(--gold); }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* interactive demo */
+  .demo { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 56px; align-items: center; }
+  .dphone { width: min(340px, 100%); margin: 0 auto; }
+  .dscreen { position: absolute; inset: 0; display: flex; flex-direction: column; }
+  .dvid { position: relative; flex: 1; background: #10131a url("images/demo-city.webp") center / cover; overflow: hidden; }
+  .dvid::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.35), transparent 30%, transparent 70%, rgba(0,0,0,0.5)); }
+  .dvid .status { position: absolute; top: 12px; left: 22px; right: 22px; display: flex; justify-content: space-between; font-size: 11px; font-weight: 600; z-index: 2; }
+  .dcap { background: #0B0C10; padding: 16px 20px 22px; }
+  .dcap .h { font-size: 13px; color: #CFCFD4; margin-bottom: 6px; }
+  .dcap .t { font-size: 16px; line-height: 1.45; color: #fff; padding: 2px 0; border-radius: 4px; transition: background .3s, color .3s; }
+  .dcap .t.hit { background: rgba(212,170,84,0.95); color: #17120A; }
+  .dcap .meta { font-size: 11.5px; color: #8A8A92; margin-top: 8px; }
+  .scan { position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--gold-hi); box-shadow: 0 0 22px 6px rgba(242,215,142,0.6); opacity: 0; z-index: 4; }
+  .scan.go { animation: scan 1s ease-in-out forwards; }
+  @keyframes scan { 0% { top: 0; opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+  .pillbar { position: absolute; right: 10px; top: 42%; z-index: 5; display: flex; flex-direction: column; gap: 10px; padding: 8px; border-radius: 999px; background: rgba(12,12,14,0.85); border: 1px solid var(--line); }
+  .pillbar button { width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer; display: grid; place-items: center; padding: 0; }
+  .pillbar .a { background: var(--rec); box-shadow: 0 0 16px rgba(255,59,59,0.6); }
+  .pillbar .a.live { animation: pulse 1s ease-in-out infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 8px rgba(255,59,59,0.25), 0 0 22px rgba(255,59,59,0.8); } }
+  .pillbar .tb { background: #24222A; border: 2px solid var(--gold); color: var(--gold-hi); font: 700 19px Cinzel, Georgia, serif; }
+  .wave { position: absolute; left: 18px; right: 70px; bottom: 16px; height: 46px; display: flex; align-items: center; gap: 3px; z-index: 3; opacity: 0; transition: opacity .3s; }
+  .wave.on { opacity: 1; }
+  .wave i { flex: 1; background: var(--rec); border-radius: 2px; height: 20%; }
+  .wave.on i { animation: bar .7s ease-in-out infinite alternate; }
+  @keyframes bar { to { height: 100%; } }
+  .toast { position: absolute; left: 14px; right: 66px; top: 44%; z-index: 6; background: rgba(14,14,16,0.95); border: 1px solid var(--gold); border-radius: 12px; padding: 10px 12px; font-size: 12.5px; transform: translateY(10px); opacity: 0; transition: all .35s; }
+  .toast.on { transform: none; opacity: 1; }
+  .toast b { display: block; font-size: 10.5px; letter-spacing: 0.16em; color: var(--gold-hi); text-transform: uppercase; margin-bottom: 2px; }
+
+  .dside .kicker { margin-bottom: 4px; }
+  .dside h2 { font-size: clamp(36px, 4.8vw, 58px); margin: 20px 0 14px; }
+  .dside > p { color: var(--muted); margin: 0 0 26px; font-size: 18px; }
+  .tries { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+  .try { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; padding: 12px 18px 12px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel-2); color: var(--text); font: 700 15px Inter, sans-serif; }
+  .try:hover { border-color: var(--gold); }
+  .try i { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-style: normal; }
+  .try.a i { background: var(--rec); }
+  .try.t i { background: #24222A; border: 1.5px solid var(--gold); color: var(--gold-hi); font-family: Cinzel, Georgia, serif; }
+  .clip { border: 1px solid var(--line); border-radius: 18px; background: var(--panel); overflow: hidden; }
+  .clip .bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; border-bottom: 1px solid var(--line); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-hi); font-weight: 700; }
+  .clip .bar em { font-style: normal; color: var(--muted); letter-spacing: 0.08em; text-transform: none; font-weight: 500; }
+  .clip .body { padding: 20px 18px 22px; min-height: 118px; font-size: 19px; line-height: 1.5; }
+  .clip .body .ph { color: var(--dim); font-size: 16px; }
+  .clip .body .cur { display: inline-block; width: 2px; height: 1.1em; background: var(--gold-hi); vertical-align: -3px; margin-left: 2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .clip .foot { display: flex; gap: 18px; padding: 0 18px 16px; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; color: var(--muted); }
+
+  /* the two tools */
+  .tools { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .tool { position: relative; border-radius: 24px; padding: 36px 34px; background: var(--panel); border: 1px solid var(--line); overflow: hidden; }
+  .tool::after { content: ""; position: absolute; right: -60px; top: -60px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(closest-side, var(--glow), transparent); opacity: 0.35; }
+  .tool .num { font-weight: 900; font-size: 15px; letter-spacing: 0.2em; color: var(--gold); }
+  .tool h3 { font-weight: 900; text-transform: uppercase; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.02; margin: 12px 0 14px; }
+  .tool p { color: #CFC7B7; margin: 0 0 18px; }
+  .tool ul { list-style: none; margin: 0; padding: 0; }
+  .tool li { padding: 10px 0 10px 30px; position: relative; border-top: 1px solid rgba(255,255,255,0.07); color: #E8E1D3; font-size: 16px; }
+  .tool li::before { content: ""; position: absolute; left: 4px; top: 18px; width: 10px; height: 10px; transform: rotate(45deg); background: var(--c); border-radius: 2px; }
+
+  /* steps strip */
+  .strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .shot { border-radius: 22px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 9 / 16; background: #000; box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
+  .shot img { width: 100%; height: 100%; object-fit: cover; }
+  .strip h3 { margin: 20px 0 4px; font-weight: 800; font-size: 20px; }
+  .strip h3 span { color: var(--gold); margin-right: 8px; }
+  .strip p { margin: 0; color: var(--muted); font-size: 15.5px; }
+
+  /* price / offline */
+  .deal { border: 1px solid var(--gold); border-radius: 28px; padding: 60px 48px; text-align: center; background: radial-gradient(90% 120% at 50% 0%, rgba(212,170,84,0.20), rgba(18,17,20,0.96) 60%); }
+  .deal h2 { font-size: clamp(40px, 6.6vw, 88px); }
+  .deal p.l { color: #D8D1C2; max-width: 680px; margin: 22px auto 40px; font-size: 19px; }
+  .deal .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; text-align: left; border-top: 1px solid var(--line); }
+  .deal .trio div { padding: 26px 24px 0; }
+  .deal .trio div + div { border-left: 1px solid var(--line); }
+  .deal .trio b { display: block; font-weight: 900; text-transform: uppercase; font-size: 20px; margin-bottom: 6px; color: var(--gold-hi); }
+  .deal .trio span { color: var(--muted); font-size: 15.5px; }
+
+  /* videos */
+  .vids { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; max-width: 800px; margin: 0 auto; }
+  .vids .phone { width: min(330px, 100%); margin: 0 auto; }
+  .vids .phone:nth-of-type(1) { transform: none; }
+
+  /* nothing like it */
+  .why { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: center; }
+  .why h2 { font-size: clamp(40px, 5.6vw, 72px); margin: 20px 0 22px; }
+  .why p { color: #CFC7B7; margin: 0 0 16px; font-size: 18px; }
+  .xlist { list-style: none; padding: 0; margin: 0; }
+  .xlist li { display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 16px 4px; border-bottom: 1px solid rgba(255,255,255,0.08); font-weight: 600; }
+  .xlist li em { font-style: normal; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); white-space: nowrap; }
+  .xlist li.us { border: 1px solid var(--gold); border-radius: 14px; margin-top: 14px; padding: 18px; background: rgba(212,170,84,0.08); }
+  .xlist li.us em { color: var(--gold-hi); }
+  .xlist li.us span { display: flex; align-items: center; gap: 12px; }
+  .xlist li.us img { width: 34px; height: 34px; border-radius: 8px; }
+
+  /* uses */
+  .uses { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; max-width: 980px; margin: 0 auto; }
+  .uses span { padding: 12px 18px; border-radius: 999px; background: var(--panel-2); border: 1px solid rgba(255,255,255,0.09); font-size: 16px; }
+  .uses span b { color: var(--gold-hi); font-weight: 700; }
+
+  /* faq */
+  .faq { max-width: 860px; margin: 0 auto; }
+  .faq details { border-bottom: 1px solid var(--line); }
+  .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; padding: 22px 4px; font-weight: 700; font-size: 18.5px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; color: var(--gold); font-size: 26px; line-height: 1; font-weight: 400; transition: transform .2s; }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq details p { margin: 0 4px 22px; color: #C9C1B2; }
+
+  /* cta */
+  .cta { text-align: center; }
+  .cta img.icon { width: 150px; height: 150px; margin: 0 auto 30px; border-radius: 32px; border: 1px solid var(--line); box-shadow: 0 0 80px rgba(212,170,84,0.25); }
+  .cta h2 { font-size: clamp(40px, 6vw, 80px); margin: 0 0 20px; }
+  .cta p { color: #CFC7B7; max-width: 620px; margin: 0 auto 32px; font-size: 18.5px; }
+
+  .endmark { text-align: center; padding: 30px 0 10px; }
+  .endmark img { width: 210px; height: auto; margin: 0 auto; filter: drop-shadow(0 0 40px rgba(212,170,84,0.25)); }
+  .endmark .sub { margin-top: 14px; font-family: Cinzel, Georgia, serif; letter-spacing: 0.3em; font-size: 13px; color: var(--gold-hi); }
+
+  footer { border-top: 1px solid var(--line); margin-top: 50px; padding: 34px 0 46px; color: var(--muted); font-size: 13.5px; background: var(--bg); }
+  footer .row { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+  footer .fine { margin-top: 18px; font-size: 12px; color: var(--dim); line-height: 1.6; }
+  footer a { color: var(--gold-hi); text-decoration: none; }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 1000px) {
+    .hero-grid, .demo, .why { grid-template-columns: 1fr; gap: 44px; }
+    .hero .phone { transform: none; }
+  }
+  @media (max-width: 1000px) {
+    .demo { display: flex; flex-direction: column; gap: 0; }
+    .dside { display: contents; }
+    .dside .kicker { order: 1; align-self: flex-start; }
+    .dside h2 { order: 2; }
+    .dside > p { order: 3; }
+    .dwrap { order: 4; width: 100%; margin-bottom: 30px; }
+    .dside .tries { order: 5; }
+    .dside .clip { order: 6; width: 100%; }
+    .dphone { width: min(290px, 100%); }
+  }
+  @media (max-width: 760px) {
+    body { font-size: 16px; }
+    section { padding: 76px 0; }
+    .hero { padding-top: 44px; }
+    .tools, .vids { grid-template-columns: 1fr; }
+    .strip { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 72%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; margin: 0 -24px; padding-left: 24px; padding-right: 24px; }
+    .strip > div { scroll-snap-align: center; }
+    .deal { padding: 44px 22px; }
+    .deal .trio { grid-template-columns: 1fr; }
+    .deal .trio div + div { border-left: 0; border-top: 1px solid var(--line); padding-top: 20px; margin-top: 20px; }
+    .deal .trio div { padding: 20px 6px 0; }
+    .brand .sub { display: none; }
+    .tool { padding: 28px 22px; }
+    .band span { font-size: 18px; }
+  }
+  @media (max-width: 440px) {
+    header.top .wrap { padding: 8px 14px; height: auto; min-height: 60px; flex-wrap: wrap; row-gap: 6px; }
+    header.top .brand { gap: 9px; }
+    header.top .brand img { width: 34px; height: 34px; }
+    header.top .brand .name { font-size: 16px; letter-spacing: 0.1em; }
+    header.top .pill-soon { font-size: 10.5px; letter-spacing: 0.12em; padding: 6px 10px; }
+    .xlist li { font-size: 15px; }
+    .xlist li em { font-size: 10.5px; letter-spacing: 0.06em; white-space: normal; text-align: right; max-width: 38%; }
+  }
+  @media (max-width: 340px) {
+    header.top .brand .name { font-size: 14px; letter-spacing: 0.06em; }
+    header.top .pill-soon { font-size: 9.5px; padding: 5px 8px; letter-spacing: 0.08em; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .band .track { animation: none; }
+  }
+</style>
+</head>
+<body id="top">
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Screen and Video to Text home">
+      <img src="images/app-icon.webp" alt="Screen and Video to Text app icon">
+      <span class="name gold-text">TREVINIUM</span><span class="sub">SCREEN &amp; VIDEO TO TEXT</span>
+    </a>
+    <span class="pill-soon">Coming soon</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">Screen and Video to Text · Android</span>
+      <h1 class="big"><span>You saw it.</span><span>You heard it.</span><span class="g">Now it's text.</span></h1>
+      <p class="lede">Two small floating buttons that sit on top of any app. One turns the sound of the video you're watching into text. The other copies every word on your screen, even words the app won't let you select.</p>
+      <div class="badges">
+        <span><b>One-time</b> purchase</span>
+        <span><b>100%</b> offline</span>
+        <span><b>No</b> subscription</span>
+        <span><b>No</b> account</span>
+      </div>
+      <a class="play-btn" href="#get">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3.5v17l14-8.5L5 3.5z" stroke="#F2D78E" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <span><small>Coming soon</small><b>Google Play</b></span>
+      </a>
+      <div class="req">Android 10 and newer</div>
+    </div>
+    <div class="reveal">
+      <div class="phone">
+        <div class="screen">
+          <video id="heroVid" src="media/commercial.mp4" poster="images/poster-commercial.jpg" autoplay muted loop playsinline preload="metadata" aria-label="30-second Screen and Video to Text commercial"></video>
+        </div>
+        <button class="sound" id="heroSound" type="button" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path id="heroWave" d="M17 9l4 6M21 9l-4 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span>Tap for sound</span>
+        </button>
+      </div>
+      <div class="cap">The 30-second commercial</div>
+    </div>
+  </div>
+</section>
+
+<div class="band" aria-hidden="true">
+  <div class="track">
+    <span>One-time purchase <i>◆</i></span><span>100% offline <i>◆</i></span><span>Nothing leaves your phone <i>◆</i></span><span>Works over any app <i>◆</i></span><span>No subscription <i>◆</i></span><span>Two buttons <i>◆</i></span>
+    <span>One-time purchase <i>◆</i></span><span>100% offline <i>◆</i></span><span>Nothing leaves your phone <i>◆</i></span><span>Works over any app <i>◆</i></span><span>No subscription <i>◆</i></span><span>Two buttons <i>◆</i></span>
+  </div>
+</div>
+
+<!-- INTERACTIVE DEMO -->
+<section id="try">
+  <div class="wrap demo">
+    <div class="reveal dwrap">
+      <div class="phone dphone">
+        <div class="screen">
+          <div class="dscreen">
+            <div class="dvid">
+              <div class="status"><span>12:30</span><span>▾ ▮</span></div>
+              <div class="wave" id="dWave"></div>
+              <div class="toast" id="dToast"><b id="dToastH">Text is copied</b><span id="dToastB">Saved to History</span></div>
+            </div>
+            <div class="dcap">
+              <div class="h">@citynotes</div>
+              <div class="t" id="dCap">The best moments happen when you least expect them.</div>
+              <div class="meta">♡ 24.8K &nbsp; ↗ Share</div>
+            </div>
+          </div>
+          <div class="scan" id="dScan"></div>
+          <div class="pillbar">
+            <button class="a" id="pA" type="button" aria-label="Demo: capture the video's audio"><svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M4 12h1M7 9v6M10 6v12M13 9v6M16 7v10M19 11v2" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></button>
+            <button class="tb" id="pT" type="button" aria-label="Demo: copy the text on screen">T</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dside reveal">
+      <span class="kicker">Try it right here</span>
+      <h2 class="big">Tap a button.<br><span class="g">Watch the words land.</span></h2>
+      <p>This is how it works on your phone. The two buttons float over whatever you're watching. Tap one and the words go straight to your clipboard.</p>
+      <div class="tries">
+        <button class="try t" id="tryT" type="button"><i>T</i>Copy the screen text</button>
+        <button class="try a" id="tryA" type="button"><i><svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M4 12h1M7 9v6M10 6v12M13 9v6M16 7v10M19 11v2" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></i>Transcribe the video</button>
+      </div>
+      <div class="clip" aria-live="polite">
+        <div class="bar"><span id="clipH">Clipboard</span><em id="clipE">empty</em></div>
+        <div class="body" id="clipB"><span class="ph">Tap a button to see what gets copied.</span></div>
+        <div class="foot"><span>COPY</span><span>SHARE</span><span>DELETE</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE TWO TOOLS -->
+<section>
+  <div class="wrap">
+    <div class="head c reveal">
+      <span class="kicker">What it does</span>
+      <h2 class="big">Two buttons. <span class="g">Every word.</span></h2>
+      <p>A small two-button strip floats at the edge of your screen, over any app. Drag it anywhere and it tucks itself against the side.</p>
+    </div>
+    <div class="tools">
+      <div class="tool reveal" style="--c: var(--rec); --glow: #FF3B3B">
+        <div class="num">BUTTON 01 · THE SOUND WAVE</div>
+        <h3>Hear the video.<br><span class="gold">Get the words.</span></h3>
+        <p>Tap it while a video plays. It listens to the sound your phone is playing, not the room, and turns the speech into clean text.</p>
+        <ul>
+          <li>Real sentences, with punctuation and capitals</li>
+          <li>Transcribes as it listens, so the text is ready the moment you stop</li>
+          <li>Up to 10 minutes per clip; at the limit it stops and transcribes by itself</li>
+          <li>Lands on your clipboard and saves to History</li>
+        </ul>
+      </div>
+      <div class="tool reveal" style="--c: var(--gold-hi); --glow: #D4AA54">
+        <div class="num">BUTTON 02 · THE T</div>
+        <h3>See the text.<br><span class="gold">Copy it.</span></h3>
+        <p>Tap it and every word visible on your screen is read and copied, from any app, any picture, any paused video.</p>
+        <ul>
+          <li>Captions burned into video, text in photos, screenshots, memes</li>
+          <li>Apps that block long-press and copy</li>
+          <li>One tap: no cropping, no switching apps</li>
+          <li>Leaves out the phone's own buttons and bars, so the text comes out clean</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REAL SCREENS -->
+<section>
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="kicker">The real app</span>
+      <h2 class="big">Tap. Copy. <span class="g">Keep it all.</span></h2>
+      <p>Screens from the actual Android build.</p>
+    </div>
+    <div class="strip">
+      <div class="reveal"><div class="shot"><img src="images/step-35.webp" alt="Real app: text from a video copied with one tap" loading="lazy"></div><h3><span>01</span>Screen text, copied</h3><p>Tap T and a small note confirms every visible word is on your clipboard.</p></div>
+      <div class="reveal"><div class="shot"><img src="images/step-43.webp" alt="Real app: capturing the audio of a playing video" loading="lazy"></div><h3><span>02</span>Video speech, captured</h3><p>Tap the sound wave, let it play, tap again. The transcript is ready.</p></div>
+      <div class="reveal"><div class="shot"><img src="images/step-50.webp" alt="Real app: Capture History with search and filters" loading="lazy"></div><h3><span>03</span>Everything saved</h3><p>History keeps every capture. Search it, filter it, then copy, share or delete.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ONE PRICE / OFFLINE -->
+<section id="price">
+  <div class="wrap">
+    <div class="deal reveal">
+      <span class="kicker">The deal</span>
+      <h2 class="big" style="margin-top:22px">Buy it once.<br><span class="g">Use it offline. Forever.</span></h2>
+      <p class="l">No monthly fee. No account. No internet. The speech recognition and text reading run on your phone's own processor, so it works in airplane mode, and your words never leave your hands.</p>
+      <div class="trio">
+        <div><b>One-time purchase</b><span>Pay once and it's yours. No subscription, no upsells, no "pro" tier.</span></div>
+        <div><b>All offline</b><span>The app doesn't even have permission to use the internet. It can't upload anything.</span></div>
+        <div><b>Totally private</b><span>No sign-up, no ads, no tracking. Your History stays on your phone.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="watch">
+  <div class="wrap">
+    <div class="head c reveal">
+      <span class="kicker">Watch it work</span>
+      <h2 class="big">See it <span class="g">in action.</span></h2>
+    </div>
+    <div class="vids">
+      <div class="reveal">
+        <div class="phone"><div class="screen"><video src="media/promo.mp4" poster="images/poster-promo.jpg" controls playsinline preload="none" aria-label="Screen and Video to Text promo video"></video></div></div>
+        <div class="cap">The quick tour · 33 seconds</div>
+      </div>
+      <div class="reveal">
+        <div class="phone"><div class="screen"><video src="media/walkthrough.mp4" poster="images/poster-walkthrough.jpg" controls playsinline preload="none" aria-label="First-install walkthrough of the real app"></video></div></div>
+        <div class="cap">First install, step by step · 1 minute</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOTHING ELSE LIKE IT -->
+<section>
+  <div class="wrap why">
+    <div class="reveal">
+      <span class="kicker">Why it's different</span>
+      <h2 class="big">There's nothing <span class="g">else like it.</span></h2>
+      <p>Other apps do a piece of this. One transcribes. One reads text out of a picture. One gives you a floating button. Most of them want the internet, an account, or a monthly fee.</p>
+      <p>We looked, and we couldn't find a single app that does all of it, in one place, completely offline. So we built it.</p>
+    </div>
+    <ul class="xlist reveal">
+      <li>Transcribe the sound of any video <em>Usually its own app</em></li>
+      <li>Copy text you can't select <em>Usually its own app</em></li>
+      <li>Floating buttons over every app <em>Usually its own app</em></li>
+      <li>Searchable history of it all <em>Usually missing</em></li>
+      <li>No internet, no subscription <em>Rare</em></li>
+      <li class="us"><span><img src="images/app-icon.webp" alt="">Screen and Video to Text</span><em>All of it · one app</em></li>
+    </ul>
+  </div>
+</section>
+
+<!-- USES -->
+<section>
+  <div class="wrap">
+    <div class="head c reveal">
+      <span class="kicker">Who it's for</span>
+      <h2 class="big">Anyone who ever <span class="g">paused a video to write something down.</span></h2>
+    </div>
+    <div class="uses reveal">
+      <span><b>Students</b> turning lectures into notes</span>
+      <span><b>Journalists</b> pulling exact quotes</span>
+      <span><b>Creators</b> grabbing scripts and captions</span>
+      <span><b>Cooks</b> saving recipes from reels</span>
+      <span><b>Researchers</b> keeping sources private</span>
+      <span><b>Anyone</b> copying an address from a photo</span>
+      <span><b>Language learners</b> saving what was said</span>
+      <span><b>Everyone</b> who hates retyping</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="wrap">
+    <div class="head c reveal">
+      <span class="kicker">Good to know</span>
+      <h2 class="big">Questions, <span class="g">answered.</span></h2>
+    </div>
+    <div class="faq reveal">
+      <details open><summary>Does it really work with no internet?</summary><p>Yes. The app has no internet permission at all. Speech recognition and text reading run on your phone, so it works in airplane mode.</p></details>
+      <details><summary>Is it a subscription?</summary><p>No. It's a one-time purchase. Buy it once and it's yours.</p></details>
+      <details><summary>Which phones does it work on?</summary><p>Android 10 and newer. Capturing the sound that other apps play needs Android 10 or later.</p></details>
+      <details><summary>What languages does it understand?</summary><p>Speech-to-text understands English. The T button reads the words shown on your screen.</p></details>
+      <details><summary>How long can a clip be?</summary><p>Up to 10 minutes per clip. At the limit it stops and transcribes automatically. For longer videos, start another clip.</p></details>
+      <details><summary>Why does Android ask permission every time?</summary><p>Android asks before any app can see your screen, at the start of every session. That's Android protecting your privacy, and no app can skip it.</p></details>
+      <details><summary>What if an app blocks its sound?</summary><p>A few apps don't allow their audio to be captured. Turn on Microphone fallback and it listens through the mic for those.</p></details>
+      <details><summary>How do I turn it off?</summary><p>Drag the buttons onto the X, tap Stop in History, or use the notification. Your saved captures stay.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="get">
+  <div class="wrap">
+    <img class="icon reveal" src="images/app-icon.webp" alt="Screen and Video to Text app icon">
+    <h2 class="big reveal">Coming soon <span class="g">to Android.</span></h2>
+    <p class="reveal">Two buttons. Every word. One-time purchase, 100% offline. Screen and Video to Text is on its way to Google Play.</p>
+    <a class="play-btn reveal" href="#top">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3.5v17l14-8.5L5 3.5z" stroke="#F2D78E" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      <span style="text-align:left"><small>Coming soon</small><b>Google Play</b></span>
+    </a>
+  </div>
+</section>
+
+<div class="endmark reveal"><img src="images/logo-full.webp" alt="TREVINIUM logo: the ornate gold T plaque above the word TREVINIUM"><div class="sub">SCREEN AND VIDEO TO TEXT</div></div>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <a class="brand" href="#top"><img src="images/trevinium-mark.webp" alt="" style="width:32px;height:32px;border-radius:4px"><span class="name gold-text" style="font-size:16px">TREVINIUM</span></a>
+      <div>© 2026 Treviño Solutions · <a href="https://trevinium.com">trevinium.com</a></div>
+    </div>
+    <div class="fine">
+      Screens shown are from the Android build. The demo above is an illustration. Features and release dates may change before launch. Results depend on clear audio, readable text and each phone's hardware. Some apps prevent their audio or screen from being captured.
+      Google Play is a trademark of Google LLC.
+    </div>
+  </div>
+</footer>
+
+<!-- TREVINIUM family bar -->
+<style>
+.tv-family{position:relative;z-index:1;background:#0b0b0c;border-top:1px solid rgba(199,154,59,.35);padding:22px max(16px,env(safe-area-inset-left,0px)) calc(22px + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 28px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.tv-family .tv-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#E9CE86;font-family:Georgia,"Times New Roman",serif;font-weight:700;letter-spacing:.24em;font-size:15px}
+.tv-family .tv-brand img{width:40px;height:40px;border-radius:6px;box-shadow:0 0 0 1px rgba(199,154,59,.55)}
+.tv-family nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px}
+.tv-family nav a{color:#d8cdb4;text-decoration:none;font-size:14px}
+.tv-family nav a:hover,.tv-family nav a[aria-current]{color:#F0DA9C}
+</style>
+<div class="tv-family">
+  <a class="tv-brand" href="https://trevinium.com/"><img src="images/trevinium-mark.webp" alt="TREVINIUM logo"><span>TREVINIUM</span></a>
+  <nav aria-label="More from Trevinium">
+    <a href="https://trevinium.com/">TREVINIUM Recorder</a>
+    <a href="/ScreenAndVideoToText/" aria-current="page">Screen and Video to Text</a>
+    <a href="/TreviniumProfessionalEditor/">Trevinium Studio</a>
+    <a href="/ConsciousScreenplay/">Conscious Screenplay</a>
+    <a href="/CutMaster/">The Cut Master</a>
+    <a href="/TreviniumVision/">Trevinium Vision</a>
+    <a href="https://johntrevinomfa.com/">John Treviño, MFA</a>
+  </nav>
+</div>
+
+<script>
+{
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('in')); }
+  else {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(e => io.observe(e));
+  }
+
+  // hero sound toggle
+  const v = document.getElementById('heroVid'), b = document.getElementById('heroSound'), wave = document.getElementById('heroWave');
+  const mute = () => { v.muted = true; b.querySelector('span').textContent = 'Tap for sound'; b.setAttribute('aria-pressed', 'false'); wave.setAttribute('d', 'M17 9l4 6M21 9l-4 6'); };
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { try { v.pause(); } catch (e) {} }
+  b.addEventListener('click', () => {
+    if (!v.muted) { mute(); return; }
+    v.muted = false; v.currentTime = 0; const p = v.play(); if (p && p.catch) p.catch(() => {});
+    b.querySelector('span').textContent = 'Sound on'; b.setAttribute('aria-pressed', 'true');
+    wave.setAttribute('d', 'M16.5 9.5a4 4 0 0 1 0 5M19 7a7.5 7.5 0 0 1 0 10');
+  });
+  document.querySelectorAll('video').forEach(el => el.addEventListener('play', () => {
+    if (el !== v) { mute(); document.querySelectorAll('video').forEach(o => { if (o !== el && o !== v) o.pause(); }); }
+  }));
+
+  // interactive demo
+  const W = document.getElementById('dWave');
+  for (let i = 0; i < 26; i++) { const s = document.createElement('i'); s.style.animationDelay = (Math.random() * 0.7).toFixed(2) + 's'; W.appendChild(s); }
+  const cap = document.getElementById('dCap'), scan = document.getElementById('dScan'), toast = document.getElementById('dToast');
+  const tH = document.getElementById('dToastH'), tB = document.getElementById('dToastB');
+  const pA = document.getElementById('pA');
+  const clipH = document.getElementById('clipH'), clipE = document.getElementById('clipE'), clipB = document.getElementById('clipB');
+  let busy = false, timers = [], userTouched = false;
+  const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+  const reset = () => { timers.forEach(clearTimeout); timers = []; cap.classList.remove('hit'); scan.classList.remove('go'); toast.classList.remove('on'); W.classList.remove('on'); pA.classList.remove('live'); busy = false; };
+  const showToast = (h, t) => { tH.textContent = h; tB.textContent = t; toast.classList.add('on'); later(() => toast.classList.remove('on'), 2200); };
+  const type = (text, label, done) => {
+    clipH.textContent = label; clipE.textContent = 'just now'; clipB.innerHTML = '';
+    const words = text.split(' '); let i = 0; const out = document.createElement('span'); const cur = document.createElement('span'); cur.className = 'cur';
+    clipB.append(out, cur);
+    const step = () => { if (i < words.length) { out.textContent += (i ? ' ' : '') + words[i++]; later(step, 110); } else { cur.remove(); done && done(); } };
+    step();
+  };
+  const doText = () => {
+    reset(); busy = true;
+    void scan.offsetWidth; scan.classList.add('go');
+    later(() => cap.classList.add('hit'), 600);
+    later(() => { showToast('Text is copied', 'Saved to History'); type('The best moments happen when you least expect them.', 'Screen text · copied', () => { busy = false; }); }, 1000);
+  };
+  const doAudio = () => {
+    reset(); busy = true;
+    pA.classList.add('live'); W.classList.add('on');
+    clipH.textContent = 'Audio capture'; clipE.textContent = 'listening…'; clipB.innerHTML = '<span class="ph">Listening to the video…</span>';
+    later(() => { pA.classList.remove('live'); W.classList.remove('on'); showToast('Transcript copied', 'Saved to History');
+      type('Move closer to your subject for cleaner audio. Good sound makes a good video.', 'Audio transcript · copied', () => { busy = false; }); }, 2400);
+  };
+  const user = fn => () => { userTouched = true; fn(); };
+  document.getElementById('pT').addEventListener('click', user(doText));
+  document.getElementById('tryT').addEventListener('click', user(doText));
+  pA.addEventListener('click', user(doAudio));
+  document.getElementById('tryA').addEventListener('click', user(doAudio));
+
+  // run the demo once by itself when it scrolls into view
+  const demo = document.getElementById('try');
+  if ('IntersectionObserver' in window) {
+    const dio = new IntersectionObserver(en => {
+      if (en[0].isIntersecting) { dio.disconnect(); if (!userTouched) { setTimeout(() => { if (!userTouched) doText(); }, 700); setTimeout(() => { if (!userTouched) doAudio(); }, 7000); } }
+    }, { threshold: 0.45 });
+    dio.observe(demo);
+  }
+}
+</script>
+</body>
+</html>
