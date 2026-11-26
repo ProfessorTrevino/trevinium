@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trevinium Studio · Professional Video Editor</title>
+<meta name="description" content="Trevinium Studio is a professional video editor that runs entirely on your phone: a magnetic timeline, Left / Right audio lanes, color wheels and scopes, on-device captions, edit by transcript, and 4K export. One price, no subscription, fully offline and private. Coming 2027 to Android and iPhone.">
+<meta name="theme-color" content="#0B0B0C">
+<meta property="og:title" content="Trevinium Studio · Professional Video Editor">
+<meta property="og:description" content="A pro video editor on your phone. One price. No subscription. Fully offline. Coming 2027 to Android and iPhone.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://trevinium.com/TreviniumProfessionalEditor/">
+<meta property="og:image" content="https://trevinium.com/TreviniumProfessionalEditor/images/og-studio.jpg">
+<link rel="canonical" href="https://trevinium.com/TreviniumProfessionalEditor/">
+<link rel="icon" href="images/studio-mark.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0B0B0C;
+    --ink: #131215;
+    --ink-2: #1B1A1E;
+    --line: rgba(201, 162, 74, 0.22);
+    --gold: #C9A24A;
+    --gold-hi: #F1D58C;
+    --gold-lo: #8C6B27;
+    --gold-grad: linear-gradient(180deg, #F6DE9A 0%, #D6B05A 45%, #A47E32 100%);
+    --ivory: #F7F3EA;
+    --text-dark: #1B1813;
+    --muted-dark: #5E5648;
+    --text-light: #F3EEE3;
+    --muted-light: #A79F90;
+    --edit: #D4A352; --audio: #3FBF8F; --color: #FF8A3D; --words: #9B7BFF; --motion: #3FB8FF; --out: #F1D58C;
+    --radius: 18px;
+    --maxw: 1160px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--black); color: var(--text-light);
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .gold-text { background: var(--gold-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .eyebrow { font-size: 13px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); font-weight: 600; }
+
+  /* header */
+  header.top {
+    position: sticky; top: 0; z-index: 50; background: rgba(11, 11, 12, 0.82);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line);
+  }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 68px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  header.top .brand .name { white-space: nowrap; }
+  header.top .pill-soon { flex: none; margin-left: auto; }
+  .brand img { width: 40px; height: 40px; border: 1px solid var(--line); }
+  .brand .name { font-family: Cinzel, Georgia, serif; font-weight: 700; font-size: 20px; letter-spacing: 0.14em; }
+  .brand .sub { font-size: 12px; letter-spacing: 0.42em; color: var(--text-light); margin-left: 2px; }
+  .pill-soon {
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600;
+    padding: 8px 14px; border-radius: 999px; border: 1px solid var(--gold); color: var(--gold-hi); white-space: nowrap;
+  }
+
+  /* hero */
+  .hero { position: relative; overflow: hidden; padding: 72px 0 40px; }
+  .hero::before {
+    content: ""; position: absolute; inset: -20% -10% auto -10%; height: 900px;
+    background: radial-gradient(closest-side, rgba(201, 162, 74, 0.20), transparent 70%); pointer-events: none;
+  }
+  .reel { position: absolute; left: 0; right: 0; top: 470px; height: 64px; opacity: 0.18; pointer-events: none; overflow: hidden; }
+  .reel i {
+    position: absolute; top: 0; left: 0; width: 200%; height: 100%;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 18px, rgba(201,162,74,.9) 18px 30px) top / 100% 9px no-repeat,
+      repeating-linear-gradient(90deg, transparent 0 18px, rgba(201,162,74,.9) 18px 30px) bottom / 100% 9px no-repeat,
+      repeating-linear-gradient(90deg, rgba(201,162,74,.35) 0 2px, transparent 2px 96px) center / 100% 40px no-repeat;
+    animation: reel 18s linear infinite;
+  }
+  @keyframes reel { to { transform: translateX(-50%); } }
+  .hero-copy { position: relative; text-align: center; max-width: 840px; margin: 0 auto; }
+  .hero h1 {
+    font-family: Cinzel, Georgia, serif; font-weight: 700; font-size: clamp(42px, 7vw, 88px);
+    line-height: 1.04; margin: 18px 0 18px; letter-spacing: 0.02em;
+  }
+  .hero .lede { font-size: clamp(18px, 2.2vw, 22px); color: #D9D2C3; margin: 0 auto; max-width: 660px; }
+  .stores { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 32px; }
+  .store {
+    display: flex; align-items: center; gap: 12px; text-align: left; padding: 12px 22px 12px 18px; border-radius: 14px;
+    background: #000; border: 1px solid rgba(255, 255, 255, 0.22); min-width: 230px;
+  }
+  .store svg { width: 28px; height: 28px; flex: none; }
+  .store small { display: block; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-hi); }
+  .store b { display: block; font-size: 19px; font-weight: 600; line-height: 1.2; }
+  .price-line { margin-top: 22px; color: var(--muted-light); font-size: 15px; letter-spacing: 0.02em; }
+  .price-line strong { color: var(--gold-hi); font-weight: 600; }
+
+  /* phones */
+  .phones { position: relative; display: flex; justify-content: center; align-items: flex-end; gap: 34px; margin-top: 64px; }
+  .phone {
+    position: relative; border-radius: 44px; padding: 12px; background: linear-gradient(160deg, #2A2830, #0D0D10 60%);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(201, 162, 74, 0.10);
+  }
+  .phone .screen { border-radius: 34px; overflow: hidden; background: #000; position: relative; aspect-ratio: 1080 / 2081; }
+  .phone .screen img { width: 100%; height: 100%; object-fit: cover; }
+  .phone.main { width: 340px; z-index: 2; }
+  .phone.side { width: 250px; opacity: 0.96; }
+  .phone-cap { text-align: center; font-size: 13px; color: var(--muted-light); margin-top: 14px; letter-spacing: 0.04em; }
+
+  /* stats */
+  .stats {
+    margin-top: 72px; display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  .stat { padding: 30px 12px; text-align: center; }
+  .stat + .stat { border-left: 1px solid var(--line); }
+  .stat .n { font-family: Cinzel, Georgia, serif; font-size: 44px; font-weight: 700; line-height: 1; }
+  .stat .l { margin-top: 10px; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted-light); }
+
+  /* sections */
+  section { padding: 110px 0; }
+  .ivory { background: var(--ivory); color: var(--text-dark); }
+  .ivory .eyebrow { color: var(--gold-lo); }
+  .dark { background: var(--black); }
+  .ink { background: var(--ink); }
+  .sec-head { text-align: center; max-width: 780px; margin: 0 auto 56px; }
+  .sec-head h2 { font-family: Cinzel, Georgia, serif; font-weight: 700; font-size: clamp(34px, 4.6vw, 54px); line-height: 1.1; margin: 14px 0 16px; }
+  .sec-head p { margin: 0; font-size: 18px; color: var(--muted-dark); }
+  .dark .sec-head p, .ink .sec-head p { color: var(--muted-light); }
+
+  /* feature groups */
+  .groups { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .group {
+    background: #fff; border: 1px solid #E6DECB; border-radius: var(--radius); padding: 28px 28px 24px;
+    position: relative; overflow: hidden; transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .group:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(60, 45, 15, 0.12); }
+  .group::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--c); }
+  .group .tag {
+    display: inline-block; font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 700;
+    font-size: 12px; letter-spacing: 0.06em; color: #111; background: var(--c); padding: 4px 12px; border-radius: 999px;
+  }
+  .group .num { position: absolute; right: 22px; top: 18px; font-family: Cinzel, Georgia, serif; font-size: 28px; color: #E3D9C2; font-weight: 700; }
+  .group h3 { margin: 14px 0 4px; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
+  .group .intro { margin: 0 0 14px; color: var(--muted-dark); font-size: 15.5px; }
+  .group ul { list-style: none; margin: 0; padding: 0; }
+  .group li { position: relative; padding: 9px 0 9px 26px; border-top: 1px solid #EFE8D8; font-size: 15.5px; line-height: 1.5; color: #2A251C; }
+  .group li::before {
+    content: ""; position: absolute; left: 4px; top: 16px; width: 9px; height: 9px; border-radius: 2px;
+    background: var(--c); transform: rotate(45deg);
+  }
+  .group li b { font-weight: 650; color: var(--text-dark); }
+
+  /* why */
+  .why { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
+  .why h2 { font-family: Cinzel, Georgia, serif; font-size: clamp(34px, 4.4vw, 52px); line-height: 1.1; margin: 14px 0 18px; }
+  .why p { color: #CFC7B7; margin: 0 0 16px; }
+  .stack { display: flex; flex-wrap: wrap; gap: 10px; }
+  .stack span {
+    font-size: 14px; padding: 9px 14px; border-radius: 10px; background: var(--ink-2); border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #9E978A; text-decoration: line-through; text-decoration-color: rgba(201, 162, 74, 0.7);
+  }
+  .one {
+    border-radius: 24px; padding: 36px; text-align: center;
+    background: radial-gradient(120% 120% at 50% 0%, rgba(201, 162, 74, 0.22), rgba(19, 18, 21, 1) 60%); border: 1px solid var(--line);
+  }
+  .one img { width: 108px; height: 108px; margin: 0 auto 18px; border: 1px solid var(--line); }
+  .one .t { font-family: Cinzel, Georgia, serif; font-size: 28px; font-weight: 700; letter-spacing: 0.06em; }
+  .one .s { color: var(--muted-light); margin-top: 6px; }
+  .arrow { text-align: center; color: var(--gold); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; margin: 18px 0; }
+
+  /* who */
+  .who { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .who .card { background: #fff; border: 1px solid #E6DECB; border-radius: var(--radius); padding: 26px; }
+  .who .ico { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: var(--black); margin-bottom: 16px; }
+  .who .ico svg { width: 24px; height: 24px; }
+  .who h3 { margin: 0 0 8px; font-size: 18.5px; }
+  .who p { margin: 0; color: var(--muted-dark); font-size: 15.5px; }
+
+  /* privacy */
+  .privacy { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .privacy div { padding: 30px 26px; }
+  .privacy div + div { border-left: 1px solid var(--line); }
+  .privacy b { display: block; font-family: Cinzel, Georgia, serif; font-size: 22px; margin-bottom: 8px; }
+  .privacy span { color: #C9C1B2; font-size: 15.5px; }
+
+  /* cta */
+  .cta { text-align: center; position: relative; overflow: hidden; }
+  .cta::before {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 900px; height: 900px; transform: translate(-50%, -50%);
+    background: radial-gradient(closest-side, rgba(201, 162, 74, 0.18), transparent 70%); pointer-events: none;
+  }
+  .cta img.mark { width: 120px; height: 120px; margin: 0 auto 26px; border: 1px solid var(--line); position: relative; }
+  .cta h2 { position: relative; font-family: Cinzel, Georgia, serif; font-size: clamp(36px, 5.4vw, 64px); line-height: 1.08; margin: 10px 0 18px; }
+  .cta p { position: relative; color: #CFC7B7; max-width: 640px; margin: 0 auto 32px; }
+  .cta .stores { position: relative; }
+
+  footer { border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--muted-light); font-size: 13.5px; }
+  footer .row { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+  footer .fine { margin-top: 18px; font-size: 12px; color: #7D766A; line-height: 1.6; }
+  footer a { color: var(--gold-hi); text-decoration: none; }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+
+  /* ---------- showcase: real screens ---------- */
+  .show { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 64px; align-items: center; }
+  .show + .show { margin-top: 110px; }
+  .show.flip .shot { order: 2; }
+  .shot { display: flex; justify-content: center; }
+  .shot .phone { width: 300px; }
+  .shot .phone .screen { aspect-ratio: auto; }
+  .shot .phone .screen img { height: auto; }
+  .shot.pair { gap: 18px; }
+  .shot.pair .phone { width: 240px; }
+  .show .copy .tag {
+    display: inline-block; font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 700;
+    font-size: 12px; letter-spacing: 0.06em; color: #111; background: var(--c); padding: 4px 12px; border-radius: 999px;
+  }
+  .show h3 { font-family: Cinzel, Georgia, serif; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.12; margin: 16px 0 14px; }
+  .show p { color: #CFC7B7; margin: 0 0 18px; }
+  .show ul { list-style: none; margin: 0; padding: 0; }
+  .show li { position: relative; padding: 8px 0 8px 28px; color: #E6DFD1; border-top: 1px solid rgba(255,255,255,0.07); font-size: 16px; }
+  .show li::before {
+    content: ""; position: absolute; left: 4px; top: 15px; width: 9px; height: 9px; border-radius: 2px;
+    background: var(--c); transform: rotate(45deg);
+  }
+
+  /* ---------- comparison ---------- */
+  .cmp-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--line); border-radius: var(--radius); }
+  table.cmp { width: 100%; min-width: 860px; border-collapse: collapse; font-size: 15px; }
+  .cmp th, .cmp td { padding: 16px 12px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.07); vertical-align: middle; }
+  .cmp thead th { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-light); font-weight: 600; background: var(--ink); }
+  .cmp th.row { text-align: left; color: var(--text-light); font-weight: 600; font-size: 15.5px; letter-spacing: 0; text-transform: none; width: 27%;
+    position: sticky; left: 0; background: var(--ink); z-index: 1; }
+  .cmp tbody tr:last-child td, .cmp tbody tr:last-child th { border-bottom: 0; }
+  .cmp .us { background: rgba(201,162,74,0.10); }
+  .cmp thead th.us { color: var(--gold-hi); background: #221d14; }
+  .cmp thead th.us img { width: 34px; height: 34px; margin: 0 auto 6px; border: 1px solid var(--line); }
+  .mk { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; font-weight: 800; font-size: 16px; line-height: 1; }
+  .mk.y { background: var(--gold-grad); color: #1A140A; }
+  .mk.n { background: rgba(255,255,255,0.06); color: #8A8378; border: 1px solid rgba(255,255,255,0.10); }
+  .mk.u { color: #6F695F; background: none; font-weight: 600; }
+  .cell-note { display: block; margin-top: 6px; font-size: 12px; color: var(--muted-light); line-height: 1.35; }
+  .chip { display: inline-block; font-size: 12.5px; padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.16); color: #CFC7B7; }
+  .cmp-legend { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; margin-top: 20px; color: var(--muted-light); font-size: 13.5px; }
+  .cmp-legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .cmp-legend .mk { width: 22px; height: 22px; font-size: 12px; }
+  .cmp-swipe { display: none; text-align: center; color: var(--muted-light); font-size: 13px; margin-top: 10px; }
+  .cmp-fine { margin: 18px auto 0; max-width: 880px; text-align: center; font-size: 12.5px; color: #7D766A; line-height: 1.6; }
+  .cmp-fine a { color: #B9A57A; }
+
+  /* ---------- big footer logo ---------- */
+  .endmark { text-align: center; padding: 64px 0 8px; }
+  .endmark img { width: 220px; height: auto; margin: 0 auto; filter: drop-shadow(0 0 40px rgba(201,162,74,0.25)); }
+  .endmark .sub { margin-top: 14px; font-family: Cinzel, Georgia, serif; letter-spacing: 0.42em; font-size: 14px; color: var(--gold-hi); }
+
+  @media (max-width: 900px) {
+    .show { grid-template-columns: 1fr; gap: 34px; }
+    .show.flip .shot { order: 0; }
+    .show + .show { margin-top: 80px; }
+    .shot .phone { width: min(300px, 76vw); }
+    .shot.pair .phone { width: min(200px, 42vw); }
+    .cmp-swipe { display: block; }
+  }
+
+  @media (max-width: 1000px) {
+    .who { grid-template-columns: repeat(2, 1fr); }
+    .why { grid-template-columns: 1fr; }
+    .privacy { grid-template-columns: repeat(2, 1fr); }
+    .privacy div:nth-child(3) { border-left: 0; }
+    .privacy div:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .phone.main { width: 300px; }
+    .phone.side { width: 210px; }
+  }
+  @media (max-width: 720px) {
+    body { font-size: 16px; }
+    section { padding: 80px 0; }
+    .hero { padding-top: 48px; }
+    .phones { gap: 14px; }
+    .phone.main { width: min(300px, 78vw); }
+    .side-wrap { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(3) { border-left: 0; }
+    .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .groups, .who, .privacy { grid-template-columns: 1fr; }
+    .privacy div + div { border-left: 0; border-top: 1px solid var(--line); }
+    .brand .sub { display: none; }
+    .store { min-width: 0; width: 100%; max-width: 320px; }
+    .group { padding: 24px 20px 20px; }
+  }
+
+  /* small phones: logo and pill share the header without touching */
+  @media (max-width: 440px) {
+    header.top .wrap { padding: 8px 14px; height: auto; min-height: 60px; flex-wrap: wrap; row-gap: 6px; }
+    header.top .brand { gap: 9px; }
+    header.top .brand img { width: 34px; height: 34px; }
+    header.top .brand .name { font-size: 16px; letter-spacing: 0.1em; }
+    header.top .pill-soon { font-size: 10.5px; letter-spacing: 0.12em; padding: 6px 10px; }
+  }
+  @media (max-width: 340px) {
+    header.top .brand .name { font-size: 14px; letter-spacing: 0.06em; }
+    header.top .pill-soon { font-size: 9.5px; padding: 5px 8px; letter-spacing: 0.08em; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reel i { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body id="top">
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Trevinium Studio home">
+      <img src="images/studio-mark.webp" alt="Trevinium gold T mark">
+      <span class="name gold-text">TREVINIUM</span><span class="sub">STUDIO</span>
+    </a>
+    <span class="pill-soon">Coming 2027</span>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="reel" aria-hidden="true"><i></i></div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <div class="eyebrow">Trevinium Studio · Professional Video Editor</div>
+      <h1><span class="gold-text">The editing suite in your pocket.</span></h1>
+      <p class="lede">A real professional video editor that runs entirely on your phone. Magnetic timeline, Left and Right audio lanes, color wheels with scopes, captions, edit by transcript and 4K export, all on the device, with nothing sent to the cloud.</p>
+      <div class="stores">
+        <div class="store">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3.5v17l14-8.5L5 3.5z" stroke="#F1D58C" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          <div><small>Coming 2027</small><b>Google Play</b></div>
+        </div>
+        <div class="store">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="3" stroke="#F1D58C" stroke-width="1.6"/><path d="M10.5 18.5h3" stroke="#F1D58C" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <div><small>Coming 2027</small><b>App Store</b></div>
+        </div>
+      </div>
+      <div class="price-line"><strong>One price</strong> · No subscription · No ads · No watermark · Nothing leaves your phone</div>
+    </div>
+
+    <div class="phones">
+      <div class="reveal">
+        <div class="phone main"><div class="screen"><img src="images/screen-editor.webp" alt="The Trevinium Studio editor: monitor, media bin, timeline with Left and Right audio lanes, tools and gold Export button"></div></div>
+        <div class="phone-cap">The editor</div>
+      </div>
+      <div class="reveal side-wrap">
+        <div class="phone side"><div class="screen"><img src="images/screen-splash.webp" alt="The Trevinium intro screen: the gold T plaque and the words Professional Video Editor"></div></div>
+        <div class="phone-cap">The Trevinium intro</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="n gold-text">4K</div><div class="l">Export</div></div>
+      <div class="stat"><div class="n gold-text">0</div><div class="l">Internet needed</div></div>
+      <div class="stat"><div class="n gold-text">0</div><div class="l">Subscriptions</div></div>
+      <div class="stat"><div class="n gold-text">1</div><div class="l">Price, yours forever</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SEE IT ============ -->
+<section class="dark" id="see-it">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">See it in action</div>
+      <h2>Real screens. Real tools.</h2>
+      <p>Every screen below is from the Android preview build, running on a phone.</p>
+    </div>
+    <div class="show reveal" style="--c:var(--color)">
+      <div class="shot"><div class="phone"><div class="screen" style="aspect-ratio:760/1550"><img src="images/panel-color.webp" alt="Color panel: live preview frame, RGB parade scope, Selected clip or Whole film, and the color-balance wheel" loading="lazy"></div></div></div>
+      <div class="copy"><span class="tag">COLOR</span><h3>Grade on a live picture of your shot.</h3><p>Drag the color wheel and your frame changes right in front of you, with a professional scope underneath. No numbers to type.</p><ul><li>Color-balance wheel, plus exposure, contrast, shadows, midtones, highlights, saturation, temperature and vignette</li><li>RGB parade, histogram and luma waveform: tap to switch</li><li>Grade one clip or the whole film. Import .cube LUTs and save your own looks</li></ul></div>
+    </div>
+    <div class="show reveal flip" style="--c:var(--audio)">
+      <div class="shot pair"><div class="phone"><div class="screen" style="aspect-ratio:760/1550"><img src="images/panel-sound.webp" alt="Clip sound panel with separate Audio L and Audio R waveforms and level sliders" loading="lazy"></div></div><div class="phone"><div class="screen" style="aspect-ratio:760/1464"><img src="images/panel-audio.webp" alt="Audio menu: import music, voice and sound effects, record a 48 kHz WAV, and mix" loading="lazy"></div></div></div>
+      <div class="copy"><span class="tag">AUDIO</span><h3>Left and Right, the way pros mix.</h3><p>Every clip's sound is split into Audio L and Audio R lanes automatically, each with its own waveform and its own level.</p><ul><li>Set each side on its own, or turn a side off completely</li><li>Import music, voice and sound effects, or record a 48 kHz voice-over at the playhead</li><li>Ducking, a master mixer with EQ and limiter, and one-knob dialogue cleanup</li></ul></div>
+    </div>
+    <div class="show reveal" style="--c:var(--words)">
+      <div class="shot"><div class="phone"><div class="screen" style="aspect-ratio:760/1464"><img src="images/panel-text.webp" alt="Text menu: caption, title, rolling credits, auto captions, edit by transcript, caption style and SRT export" loading="lazy"></div></div></div>
+      <div class="copy"><span class="tag">WORDS</span><h3>Captions and cuts, straight from the words.</h3><p>Speech recognition runs on your phone, not a server. Turn speech into captions, or edit the clip by striking words from its transcript.</p><ul><li>Auto captions made entirely on the device (English)</li><li>Edit by transcript: strike words to cut them, with false starts suggested</li><li>Caption styles, and SRT export and import</li></ul></div>
+    </div>
+    <div class="show reveal flip" style="--c:var(--words)">
+      <div class="shot"><div class="phone"><div class="screen" style="aspect-ratio:760/1532"><img src="images/panel-title.webp" alt="New title panel showing a live preview, style chips, size sliders and the on-screen range bar" loading="lazy"></div></div></div>
+      <div class="copy"><span class="tag">TITLES</span><h3>Titles and rolling credits, previewed on your frame.</h3><p>Type the words, pick a style and see it on your own shot before you add it. Set exactly when it comes on and goes off.</p><ul><li>Gold, white and yellow styles, plus rolling end credits</li><li>Height on screen and size sliders</li><li>An on-screen range bar sets In and Out</li></ul></div>
+    </div>
+    <div class="show reveal" style="--c:var(--motion)">
+      <div class="shot"><div class="phone"><div class="screen" style="aspect-ratio:760/1550"><img src="images/panel-transition.webp" alt="Transition panel with live cards for Cut, Dip to black and Cross-dissolve, and length chips" loading="lazy"></div></div></div>
+      <div class="copy"><span class="tag">TRANSITIONS</span><h3>See the transition before you choose it.</h3><p>Each style plays on your own two clips, looping, so you pick by eye, not by name.</p><ul><li>Cut, dip to black and cross-dissolve</li><li>Lengths of 0.25, 0.5 and 1 second</li><li>One tap applies it to every cut in the film</li></ul></div>
+    </div>
+    <div class="show reveal flip" style="--c:var(--edit)">
+      <div class="shot"><div class="phone"><div class="screen" style="aspect-ratio:760/1464"><img src="images/panel-speed.webp" alt="Clip speed menu listing 0.25x, 0.5x, 0.75x, 1.0x, 1.5x, 2.0x and 3.0x" loading="lazy"></div></div></div>
+      <div class="copy"><span class="tag">SPEED</span><h3>Slow motion, fast motion and smooth ramps.</h3><p>Pick a speed from a quarter speed up to triple, or ramp from one speed to another with an easing curve.</p><ul><li>0.25x to 3x constant speed</li><li>Speed ramps with classic, ease-in, ease-out and ease-in-out curves</li><li>Reverse a clip or freeze a frame</li></ul></div>
+    </div>
+    <div class="show reveal" style="--c:var(--motion)">
+      <div class="shot"><div class="phone"><div class="screen" style="aspect-ratio:760/1550"><img src="images/panel-crop.webp" alt="Crop, fit and rotate panel with a live preview, Letterbox or Fill and crop, edge crop, rotation and flips" loading="lazy"></div></div></div>
+      <div class="copy"><span class="tag">FRAMING</span><h3>Fit any screen, from cinema to vertical.</h3><p>Letterbox or fill, crop the edges, rotate and flip, with a live preview of the result.</p><ul><li>16:9, 9:16, 1:1, 4:5, 1.85:1 and 2.39:1 canvases</li><li>Auto-reframe that finds the face and keeps it centered</li><li>Safe zones for TikTok, Reels and Shorts</li></ul></div>
+    </div>
+    <div class="show reveal flip" style="--c:var(--out)">
+      <div class="shot"><div class="phone"><div class="screen" style="aspect-ratio:760/1464"><img src="images/panel-export.webp" alt="Export menu listing 1080p and 2160p options at frame rates from 23.976 to 60 fps" loading="lazy"></div></div></div>
+      <div class="copy"><span class="tag">EXPORT</span><h3>Up to 4K, saved straight to your gallery.</h3><p>Choose the size and frame rate, then H.264 or HEVC. No watermark, ever, and nothing is uploaded.</p><ul><li>480p, 720p, 1080p and 2160p (4K)</li><li>Source frame rate, or 23.976, 24, 25, 30, 50 and 60 fps</li><li>Send the timeline to Final Cut Pro, Premiere Pro or DaVinci Resolve</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="ivory" id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Everything it does</div>
+      <h2>Every tool. Every feature.</h2>
+      <p>Built the way professional editors work, sized for one hand. Every setting is a wheel, a slider or a picture of your own shot. You never type a number.</p>
+    </div>
+
+    <div class="groups">
+      <div class="group reveal" style="--c:var(--edit)"><span class="num">01</span><span class="tag">EDIT</span>
+        <h3>Timeline &amp; editing</h3>
+        <p class="intro">A magnetic timeline that feels like a desktop editor.</p>
+        <ul>
+          <li><b>Magnetic timeline</b> with snapping, pinch to zoom and a gold playhead</li>
+          <li><b>Trim by grabbing the edge.</b> No handles in the way of precise cuts, and the trim previews live</li>
+          <li><b>Split</b> at the playhead, <b>delete</b> and <b>ripple edits</b> that keep everything after in sync</li>
+          <li><b>Long-press to lift</b> any clip, title or sound and drag it in time</li>
+          <li><b>Source monitor:</b> play the original clip, mark In and Out, then insert it at the playhead</li>
+          <li><b>Speed:</b> constant speed, or ramps with curves (classic, ease in, ease out, ease in-out)</li>
+          <li><b>Reverse</b> a clip and <b>freeze</b> a frame</li>
+          <li><b>Jog wheel and J / K / L shuttle</b> with frame-by-frame steps, plus keyboard shortcuts</li>
+          <li><b>Copy, paste and duplicate</b> clips, with full <b>undo and redo</b></li>
+          <li><b>Full-screen adjustment panels</b> with a live picture of what you're changing pinned on top, and Apply always in reach</li>
+          <li><b>No number typing:</b> wheels, sliders and range bars over your own frames and waveforms. Double-tap any control to reset it</li>
+          <li><b>Portrait or landscape:</b> in landscape the monitor and timeline sit side by side with the tools</li>
+        </ul>
+      </div>
+
+      <div class="group reveal" style="--c:var(--audio)"><span class="num">02</span><span class="tag">AUDIO</span>
+        <h3>Sound</h3>
+        <p class="intro">Audio laid out the way pros mix it.</p>
+        <ul>
+          <li><b>Left and Right audio lanes,</b> split automatically, each with its own waveform. Mono sounds are marked Mono</li>
+          <li><b>Set each side on its own:</b> Left and Right levels for every clip</li>
+          <li><b>Music, voice and sound-effect tracks</b> with volume, pan, fade in and fade out</li>
+          <li><b>Record a voice-over</b> in 48 kHz right at the playhead</li>
+          <li><b>Automatic ducking:</b> music dips under voice</li>
+          <li><b>Master mixer:</b> 3-band EQ, compression, peak limiter, and loudness normalizing to −14 LUFS</li>
+          <li><b>Clean up dialogue</b> with one knob: noise reduction learned from your clip, de-esser, mud cut, presence and leveling, with Before and After</li>
+          <li><b>Sync production audio,</b> and unlink, extract or mute a clip's sound</li>
+          <li><b>Render a preview mix</b> to hear the finished sound before you export</li>
+        </ul>
+      </div>
+
+      <div class="group reveal" style="--c:var(--color)"><span class="num">03</span><span class="tag">COLOR</span>
+        <h3>Color grading</h3>
+        <p class="intro">Grade on a live picture of your own shot.</p>
+        <ul>
+          <li><b>Color-balance wheel</b> and sliders for exposure, contrast, shadows, midtones, highlights, saturation, temperature and vignette</li>
+          <li><b>Scopes:</b> RGB parade, histogram and luma waveform</li>
+          <li><b>Looks</b> previewed on your frame, plus <b>saved looks</b> you can reuse</li>
+          <li><b>Import .cube LUTs</b> and shape <b>RGB curves</b></li>
+          <li><b>Per-clip grades or the whole film,</b> with copy, paste and reset</li>
+          <li><b>Adjustment layers</b> with their own grade, film grain and camera shake</li>
+          <li><b>Chroma key</b> for green screen and blue screen</li>
+        </ul>
+      </div>
+
+      <div class="group reveal" style="--c:var(--words)"><span class="num">04</span><span class="tag">WORDS</span>
+        <h3>Captions, titles &amp; transcript</h3>
+        <p class="intro">Speech recognition that runs on your phone, not on a server.</p>
+        <ul>
+          <li><b>Auto captions</b> made on the device (English)</li>
+          <li><b>Edit by transcript:</b> strike words in the text and the cuts are made for you. Likely false starts and stutters are flagged</li>
+          <li><b>Remove silence</b> with live sliders that show every cut and the time saved before you apply</li>
+          <li><b>Titles</b> in gold, white or yellow, plus <b>rolling credits</b></li>
+          <li><b>Caption styles,</b> and <b>SRT</b> import and export</li>
+        </ul>
+      </div>
+
+      <div class="group reveal" style="--c:var(--motion)"><span class="num">05</span><span class="tag">MOTION</span>
+        <h3>Layers, motion &amp; framing</h3>
+        <p class="intro">Composite, animate and reframe for any screen.</p>
+        <ul>
+          <li><b>Image overlays</b> you drag and pinch into place, with size, opacity and rotation</li>
+          <li><b>Keyframe overlays</b> with a curve editor for smooth easing</li>
+          <li><b>Picture-in-picture</b> video</li>
+          <li><b>Transitions:</b> cut, dip to black and cross-dissolve, previewed on your own clips</li>
+          <li><b>Crop, fit, rotate and flip</b></li>
+          <li><b>Every shape of screen:</b> 16:9, 9:16, 1:1, 4:5, 1.85:1 and 2.39:1</li>
+          <li><b>Auto-reframe</b> that finds the face and keeps it centered</li>
+          <li><b>Safe zones</b> for TikTok, Reels and Shorts, plus rule-of-thirds framing guides</li>
+          <li><b>Full-screen playback</b> with a double-tap on the picture</li>
+        </ul>
+      </div>
+
+      <div class="group reveal" style="--c:var(--out)"><span class="num">06</span><span class="tag">EXPORT</span>
+        <h3>Export &amp; workflow</h3>
+        <p class="intro">Finish on the phone, or keep going on the desktop.</p>
+        <ul>
+          <li><b>Export up to 4K</b> at 23.976, 24, 25, 30, 50 or 60 fps, in H.264 or HEVC, straight to your gallery</li>
+          <li><b>No watermark,</b> ever</li>
+          <li><b>Send your timeline to the desktop:</b> Final Cut Pro, Premiere Pro, DaVinci Resolve and EDL</li>
+          <li><b>Edit from an external SSD or card:</b> projects live in a folder that opens on another device without relinking</li>
+          <li><b>Collect media, relink missing files</b> and <b>project archives</b></li>
+          <li><b>Named projects</b> and automatic drafts, so you pick up right where you left off</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section class="ink" id="compare">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">How it compares</div>
+      <h2>Everything. <span class="gold-text">In one app.</span></h2>
+      <p>Other editors make you choose: pay every month, stay online, or buy add-ons. Trevinium Studio checks every box.</p>
+    </div>
+    <div class="cmp-wrap reveal">
+      <table class="cmp">
+        <thead><tr>
+          <th class="row" scope="col">Feature</th>
+          <th class="us" scope="col"><img src="images/studio-mark.webp" alt="">Trevinium Studio</th>
+          <th scope="col">CapCut</th><th scope="col">LumaFusion</th><th scope="col">KineMaster</th><th scope="col">InShot</th><th scope="col">Adobe Premiere mobile</th>
+        </tr></thead>
+        <tbody><tr><th class="row" scope="row">Every feature for one price, no subscription</th><td class="us"><span class="mk y" aria-label="Yes">&#10003;</span></td><td><span class="mk n" aria-label="No">&#10005;</span><span class="cell-note">Subscription</span></td><td><span class="chip">Add-ons sold separately</span></td><td><span class="mk n" aria-label="No">&#10005;</span><span class="cell-note">Subscription</span></td><td><span class="mk y" aria-label="Yes">&#10003;</span><span class="cell-note">Lifetime option</span></td><td><span class="chip">Paid AI credits</span></td></tr><tr><th class="row" scope="row">Auto captions with no internet</th><td class="us"><span class="mk y" aria-label="Yes">&#10003;</span></td><td><span class="mk n" aria-label="No">&#10005;</span><span class="cell-note">Needs internet</span></td><td><span class="mk n" aria-label="No">&#10005;</span><span class="cell-note">No auto captions</span></td><td><span class="mk y" aria-label="Yes">&#10003;</span></td><td><span class="mk u" aria-label="Not stated">&mdash;</span></td><td><span class="mk u" aria-label="Not stated">&mdash;</span></td></tr><tr><th class="row" scope="row">Import your own .cube LUTs</th><td class="us"><span class="mk y" aria-label="Yes">&#10003;</span></td><td><span class="mk n" aria-label="No">&#10005;</span><span class="cell-note">Desktop only</span></td><td><span class="mk y" aria-label="Yes">&#10003;</span></td><td><span class="mk y" aria-label="Yes">&#10003;</span></td><td><span class="mk u" aria-label="Not stated">&mdash;</span></td><td><span class="mk y" aria-label="Yes">&#10003;</span></td></tr><tr><th class="row" scope="row">Separate Left &amp; Right audio lanes</th><td class="us"><span class="mk y" aria-label="Yes">&#10003;</span></td><td><span class="mk n" aria-label="No">&#10005;</span></td><td><span class="chip">Dual-mono</span></td><td><span class="mk n" aria-label="No">&#10005;</span></td><td><span class="mk n" aria-label="No">&#10005;</span></td><td><span class="mk u" aria-label="Not stated">&mdash;</span></td></tr><tr><th class="row" scope="row">Send the timeline to Final Cut, Premiere &amp; Resolve</th><td class="us"><span class="mk y" aria-label="Yes">&#10003;</span></td><td><span class="mk n" aria-label="No">&#10005;</span></td><td><span class="chip">Add-on: Final Cut, Resolve</span></td><td><span class="mk n" aria-label="No">&#10005;</span></td><td><span class="mk n" aria-label="No">&#10005;</span></td><td><span class="chip">Premiere desktop only</span></td></tr></tbody>
+      </table>
+    </div>
+    <div class="cmp-swipe">Swipe the table to see every app &rarr;</div>
+    <div class="cmp-legend"><span><span class="mk y" aria-label="Yes">&#10003;</span> Included</span><span><span class="mk n" aria-label="No">&#10005;</span> Not offered</span><span><span class="mk u" aria-label="Not stated">&mdash;</span> Not stated by the company</span></div>
+    <p class="cmp-fine">Compared against each company's own app-store listings and help pages, November 2026. Apps change, and we'll update this table when they do. Sources:
+      <a href="https://www.capcut.com/help/auto-captions">CapCut captions</a> &middot;
+      <a href="https://apps.apple.com/app/lumafusion/id1062022008">LumaFusion</a> &middot;
+      <a href="https://kinemaster.com/features/auto-captions">KineMaster captions</a> &middot;
+      <a href="https://kinemaster.com/features">KineMaster plans</a> &middot;
+      <a href="https://apps.apple.com/us/app/id997362197">InShot</a> &middot;
+      <a href="https://apps.apple.com/app/id6742757464">Adobe Premiere</a> &middot;
+      <a href="https://helpx.adobe.com/premiere/mobile/whats-new/whats-new.html">Premiere LUTs</a>.
+    </p>
+  </div>
+</section>
+
+<!-- ============ WHY ============ -->
+<section class="dark">
+  <div class="wrap why">
+    <div class="reveal">
+      <div class="eyebrow">Why it's different</div>
+      <h2>Pay once. Own it.</h2>
+      <p>Most phone editors rent you their best tools. They charge every month, stamp a watermark on your work, upload your footage to their servers and ask you to make an account before you can cut a single frame.</p>
+      <p>Trevinium Studio does none of that. You pay one price and the whole editor is yours. It works on a plane, on location or in a dead zone, because it never needs the internet.</p>
+    </div>
+    <div class="reveal">
+      <div class="stack">
+        <span>Monthly subscription</span><span>Pro features locked</span><span>Watermark</span><span>Cloud upload</span>
+        <span>Account required</span><span>Ads</span><span>Internet required</span><span>Your footage on their servers</span>
+      </div>
+      <div class="arrow">Replaced by</div>
+      <div class="one">
+        <img src="images/studio-mark.webp" alt="">
+        <div class="t gold-text">TREVINIUM STUDIO</div>
+        <div class="s">One price · Every feature · Fully offline</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHO ============ -->
+<section class="ivory">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Who it's for</div>
+      <h2>Made for people who make films.</h2>
+    </div>
+    <div class="who">
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="13" height="10" rx="2" stroke="#F1D58C" stroke-width="1.6"/><path d="M16 10.5l5-3v9l-5-3" stroke="#F1D58C" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+        <h3>Filmmakers</h3><p>Cut on set, grade on the drive home and send the timeline to your desktop suite.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><rect x="7" y="2.5" width="10" height="19" rx="2.5" stroke="#F1D58C" stroke-width="1.6"/><path d="M11 6h2" stroke="#F1D58C" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+        <h3>Creators</h3><p>Vertical edits, auto captions, safe zones and auto-reframe for TikTok, Reels and Shorts.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-5 9 5-9 5-9-5z" stroke="#F1D58C" stroke-width="1.6" stroke-linejoin="round"/><path d="M7 11.5V16c0 1.5 2.2 3 5 3s5-1.5 5-3v-4.5" stroke="#F1D58C" stroke-width="1.6"/></svg></div>
+        <h3>Students &amp; teachers</h3><p>A complete film-school editing bay on every student's phone, with no accounts and no subscriptions.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="#F1D58C" stroke-width="1.6"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="#F1D58C" stroke-width="1.6"/></svg></div>
+        <h3>Journalists &amp; documentarians</h3><p>Sensitive footage stays on your phone. No uploads, no cloud, no one else's servers.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRIVACY ============ -->
+<section class="dark">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Private by design</div>
+      <h2>Your footage.<br><span class="gold-text">Your phone. Period.</span></h2>
+    </div>
+    <div class="privacy reveal">
+      <div><b class="gold-text">Fully offline</b><span>Editing, captions, voice cleanup and export all happen on the phone. No internet, ever.</span></div>
+      <div><b class="gold-text">Totally private</b><span>Nothing is uploaded, collected or tracked. Your projects never leave your device.</span></div>
+      <div><b class="gold-text">One price</b><span>No subscription and no in-app upsells. Every feature is included.</span></div>
+      <div><b class="gold-text">No account</b><span>No sign-up, no ads, no watermark. Open it and start cutting.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta ink">
+  <div class="wrap">
+    <img class="mark reveal" src="images/studio-mark.webp" alt="Trevinium gold T mark">
+    <div class="eyebrow reveal">Coming 2027</div>
+    <h2 class="reveal"><span class="gold-text">Coming 2027 to<br>Android and iPhone.</span></h2>
+    <p class="reveal">A complete professional editor, one price, no subscription, fully offline and private. Trevinium Studio is on its way to Google Play and the App Store.</p>
+    <div class="stores reveal">
+      <div class="store">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 3.5v17l14-8.5L5 3.5z" stroke="#F1D58C" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <div><small>Coming 2027</small><b>Google Play</b></div>
+      </div>
+      <div class="store">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="3" stroke="#F1D58C" stroke-width="1.6"/><path d="M10.5 18.5h3" stroke="#F1D58C" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <div><small>Coming 2027</small><b>App Store</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="endmark reveal"><img src="images/logo-full.webp" alt="TREVINIUM logo: the ornate gold T plaque above the word TREVINIUM"><div class="sub">STUDIO</div></div>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <a class="brand" href="#top"><img src="images/studio-mark.webp" alt="" style="width:32px;height:32px"><span class="name gold-text" style="font-size:16px">TREVINIUM</span></a>
+      <div>© 2026 Treviño Solutions · <a href="https://trevinium.com">trevinium.com</a></div>
+    </div>
+    <div class="fine">
+      The screens shown are from the Android preview build. Features and release dates may change before launch, and 4K and HEVC export depend on each phone's hardware.
+      Google Play is a trademark of Google LLC. App Store and Final Cut Pro are trademarks of Apple Inc. Premiere Pro is a trademark of Adobe. DaVinci Resolve is a trademark of Blackmagic Design. CapCut, LumaFusion, KineMaster, InShot, TikTok, Instagram Reels and YouTube Shorts are trademarks of their respective owners. Trevinium Studio is not affiliated with any of them.
+    </div>
+  </div>
+</footer>
+
+<!-- TREVINIUM family bar -->
+<style>
+.tv-family{position:relative;z-index:1;background:#0b0b0c;border-top:1px solid rgba(199,154,59,.35);padding:22px max(16px,env(safe-area-inset-left,0px)) calc(22px + env(safe-area-inset-bottom,0px));display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px 28px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.tv-family .tv-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#E9CE86;font-family:Georgia,"Times New Roman",serif;font-weight:700;letter-spacing:.24em;font-size:15px}
+.tv-family .tv-brand img{width:40px;height:40px;border-radius:6px;box-shadow:0 0 0 1px rgba(199,154,59,.55)}
+.tv-family nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px}
+.tv-family nav a{color:#d8cdb4;text-decoration:none;font-size:14px}
+.tv-family nav a:hover,.tv-family nav a[aria-current]{color:#F0DA9C}
+</style>
+<div class="tv-family">
+  <a class="tv-brand" href="https://trevinium.com/"><img src="images/studio-mark.webp" alt="TREVINIUM logo"><span>TREVINIUM</span></a>
+  <nav aria-label="More from Trevinium">
+    <a href="https://trevinium.com/">TREVINIUM Recorder</a>
+    <a href="/TreviniumProfessionalEditor/" aria-current="page">Trevinium Studio</a>
+    <a href="/ConsciousScreenplay/">Conscious Screenplay</a>
+    <a href="/CutMaster/">The Cut Master</a>
+    <a href="/TreviniumVision/">Trevinium Vision</a>
+    <a href="https://johntrevinomfa.com/">John Treviño, MFA</a>
+  </nav>
+</div>
+
+<script>
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: 0.12 });
+  els.forEach(function (e) { io.observe(e); });
+})();
+</script>
+</body>
+</html>
